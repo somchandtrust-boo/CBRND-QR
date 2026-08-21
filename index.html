@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Offline High Capacity QR Generator</title>
+<title>QR Generator</title>
 
 <style>
 *{
@@ -14,162 +14,407 @@
 body{
     margin:0;
     min-height:100vh;
+    font-family:Arial,sans-serif;
+
+    background:
+        radial-gradient(circle at top left,#dbeafe,transparent 35%),
+        radial-gradient(circle at bottom right,#fce7f3,transparent 35%),
+        linear-gradient(135deg,#eef2ff,#f8fafc);
+
     display:flex;
     align-items:center;
     justify-content:center;
     padding:20px;
-    background:#f2f4f7;
-    font-family:Arial,sans-serif;
 }
 
 .container{
     width:100%;
     max-width:460px;
-    background:#fff;
+
+    background:rgba(255,255,255,.96);
+
+    border-radius:22px;
+
     padding:30px;
-    border-radius:16px;
+
     text-align:center;
-    box-shadow:0 8px 30px rgba(0,0,0,.12);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.12);
+
+    border:1px solid rgba(255,255,255,.8);
 }
 
-h1{
-    margin:0 0 8px;
-    font-size:28px;
-    color:#222;
-}
+/* Header */
 
-.subtitle{
-    color:#777;
-    font-size:14px;
+.header{
     margin-bottom:22px;
 }
 
+.logo{
+    width:60px;
+    height:60px;
+
+    margin:0 auto 12px;
+
+    border-radius:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:28px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #8b5cf6,
+            #ec4899
+        );
+
+    box-shadow:
+        0 10px 25px rgba(99,102,241,.35);
+}
+
+h1{
+    margin:0;
+
+    font-size:28px;
+
+    color:#111827;
+}
+
+.subtitle{
+    margin-top:7px;
+
+    color:#6b7280;
+
+    font-size:14px;
+}
+
+/* Input */
+
 textarea{
     width:100%;
+
     min-height:130px;
+
     resize:vertical;
-    padding:14px;
-    border:1px solid #ccc;
-    border-radius:9px;
+
+    padding:15px;
+
+    border:2px solid #e5e7eb;
+
+    border-radius:12px;
+
     font-size:16px;
+
     font-family:Arial,sans-serif;
+
     outline:none;
+
+    transition:.2s;
 }
 
 textarea:focus{
-    border-color:#222;
+    border-color:#6366f1;
+
+    box-shadow:
+        0 0 0 4px rgba(99,102,241,.10);
 }
 
+/* Counter */
+
+.counter{
+    text-align:right;
+
+    margin-top:6px;
+
+    font-size:12px;
+
+    color:#8b5cf6;
+}
+
+/* Settings */
+
 .controls{
-    display:flex;
-    gap:10px;
-    margin-top:12px;
+    margin-top:14px;
 }
 
 select{
-    flex:1;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:15px;
-    background:white;
-}
-
-button{
     width:100%;
-    padding:14px;
-    margin-top:12px;
-    border:0;
-    border-radius:8px;
-    font-size:16px;
-    font-weight:bold;
+
+    padding:13px;
+
+    border:2px solid #e5e7eb;
+
+    border-radius:10px;
+
+    background:white;
+
+    font-size:14px;
+
+    outline:none;
+
     cursor:pointer;
 }
 
+select:focus{
+    border-color:#8b5cf6;
+}
+
+/* Buttons */
+
+button{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:13px;
+
+    border:0;
+
+    border-radius:11px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
 .generate{
-    background:#111;
+
     color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #8b5cf6,
+            #ec4899
+        );
+
+    box-shadow:
+        0 8px 20px rgba(139,92,246,.25);
 }
 
 .generate:hover{
-    background:#333;
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 12px 25px rgba(139,92,246,.35);
 }
 
 .download{
-    background:#198754;
+
     color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10b981,
+            #059669
+        );
+
     display:none;
+
+    box-shadow:
+        0 8px 18px rgba(16,185,129,.25);
 }
 
 .download:hover{
-    background:#146c43;
+    transform:translateY(-1px);
+}
+
+/* QR */
+
+.qr-card{
+
+    margin-top:22px;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #eef2ff
+        );
+
+    border:1px solid #e5e7eb;
+
+    min-height:20px;
 }
 
 #qrcode{
-    margin:25px auto 10px;
+
     display:flex;
+
     justify-content:center;
+
     align-items:center;
+
     overflow:auto;
 }
 
 #qrcode img{
+
     max-width:100%;
+
     height:auto;
+
     image-rendering:pixelated;
+
+    background:white;
+
+    padding:10px;
+
+    border-radius:8px;
 }
 
-.info{
-    margin-top:14px;
-    font-size:12px;
-    color:#888;
-}
+/* Error */
 
 .error{
+
     display:none;
-    color:#d00000;
-    font-size:14px;
+
     margin-top:10px;
+
+    color:#dc2626;
+
+    font-size:14px;
+
+    background:#fef2f2;
+
+    padding:10px;
+
+    border-radius:8px;
 }
 
-.counter{
-    text-align:right;
-    margin-top:6px;
+/* Footer */
+
+.info{
+
+    margin-top:18px;
+
     font-size:12px;
-    color:#888;
+
+    color:#9ca3af;
+}
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    color:#059669;
+}
+
+.status-dot{
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+    background:#10b981;
+}
+
+
+/* Mobile */
+
+@media(max-width:500px){
+
+    body{
+        padding:12px;
+    }
+
+    .container{
+        padding:22px;
+
+        border-radius:18px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>QR Generator</h1>
+    <div class="header">
 
-    <div class="subtitle">
-        High Capacity • Works Offline
+        <div class="logo">
+            QR
+        </div>
+
+        <h1>QR Generator</h1>
+
+        <div class="subtitle">
+            High Capacity • Works Offline
+        </div>
+
     </div>
+
 
     <textarea
         id="qrText"
         placeholder="Enter text, URL or other information..."
     ></textarea>
 
+
     <div class="counter">
-        Characters: <span id="counter">0</span>
+        Characters:
+        <span id="counter">0</span>
     </div>
+
 
     <div class="controls">
 
         <select id="errorLevel">
-            <option value="L">Error Correction: L — Maximum Capacity</option>
-            <option value="M">Error Correction: M — Medium</option>
-            <option value="Q">Error Correction: Q — High</option>
-            <option value="H">Error Correction: H — Maximum Protection</option>
+
+            <option value="L">
+                Error Correction: L — Maximum Capacity
+            </option>
+
+            <option value="M">
+                Error Correction: M — Medium
+            </option>
+
+            <option value="Q">
+                Error Correction: Q — High
+            </option>
+
+            <option value="H">
+                Error Correction: H — Maximum Protection
+            </option>
+
         </select>
 
     </div>
+
 
     <button
         class="generate"
@@ -178,9 +423,19 @@ button{
         Generate QR
     </button>
 
-    <div id="error" class="error"></div>
 
-    <div id="qrcode"></div>
+    <div
+        id="error"
+        class="error"
+    ></div>
+
+
+    <div class="qr-card">
+
+        <div id="qrcode"></div>
+
+    </div>
+
 
     <button
         id="downloadBtn"
@@ -190,14 +445,29 @@ button{
         Download QR PNG
     </button>
 
+
     <div class="info">
+
         100% Offline • No API • No CDN
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            Ready
+
+        </div>
+
     </div>
 
 </div>
 
 
-<!-- LOCAL FILE — INTERNET NOT REQUIRED -->
+<!-- IMPORTANT:
+     Keep your existing local qrcode.js.
+     Do NOT change this line.
+-->
+
 <script src="qrcode.js"></script>
 
 
@@ -206,16 +476,21 @@ button{
 let currentQR = null;
 
 
-/* Character counter */
+/* Character Counter */
 
 document
 .getElementById("qrText")
-.addEventListener("input",function(){
+.addEventListener(
+    "input",
+    function(){
 
-    document.getElementById("counter").textContent =
-        this.value.length;
+        document
+        .getElementById("counter")
+        .textContent =
+            this.value.length;
 
-});
+    }
+);
 
 
 /* Generate QR */
@@ -223,22 +498,27 @@ document
 function generateQR(){
 
     const text =
-        document.getElementById("qrText")
+        document
+        .getElementById("qrText")
         .value
         .trim();
 
     const level =
-        document.getElementById("errorLevel")
+        document
+        .getElementById("errorLevel")
         .value;
 
     const qrBox =
-        document.getElementById("qrcode");
+        document
+        .getElementById("qrcode");
 
     const error =
-        document.getElementById("error");
+        document
+        .getElementById("error");
 
     const download =
-        document.getElementById("downloadBtn");
+        document
+        .getElementById("downloadBtn");
 
 
     qrBox.innerHTML = "";
@@ -253,7 +533,8 @@ function generateQR(){
         error.textContent =
             "Please enter text or URL.";
 
-        error.style.display = "block";
+        error.style.display =
+            "block";
 
         return;
     }
@@ -262,32 +543,21 @@ function generateQR(){
     try{
 
         /*
-        0 = Automatic QR Version
-
-        Library automatically selects
-        the required QR version from 1–40.
+        0 = automatic Version 1–40
         */
 
         const qr =
             qrcode(0,level);
 
 
-        /*
-        Byte mode supports normal text,
-        URLs and arbitrary string data.
-        */
+        qr.addData(
+            text,
+            "Byte"
+        );
 
-        qr.addData(text,"Byte");
 
         qr.make();
 
-
-        /*
-        Render QR image.
-
-        8 = cell size
-        12 = quiet-zone margin
-        */
 
         const img =
             qr.createImgTag(
@@ -297,7 +567,8 @@ function generateQR(){
             );
 
 
-        qrBox.innerHTML = img;
+        qrBox.innerHTML =
+            img;
 
 
         currentQR =
@@ -327,21 +598,12 @@ function generateQR(){
 }
 
 
-/* Download QR */
+/* Download PNG */
 
 function downloadQR(){
 
     if(!currentQR)
         return;
-
-
-    /*
-    Convert image to canvas
-    and download PNG.
-    */
-
-    const img =
-        currentQR;
 
 
     const canvas =
@@ -352,10 +614,10 @@ function downloadQR(){
 
 
     canvas.width =
-        img.naturalWidth;
+        currentQR.naturalWidth;
 
     canvas.height =
-        img.naturalHeight;
+        currentQR.naturalHeight;
 
 
     ctx.imageSmoothingEnabled =
@@ -363,7 +625,7 @@ function downloadQR(){
 
 
     ctx.drawImage(
-        img,
+        currentQR,
         0,
         0
     );
@@ -392,22 +654,25 @@ function downloadQR(){
 }
 
 
-/* Enter = Generate */
+/* Ctrl + Enter */
 
 document
 .getElementById("qrText")
-.addEventListener("keydown",function(e){
+.addEventListener(
+    "keydown",
+    function(e){
 
-    if(
-        e.ctrlKey &&
-        e.key === "Enter"
-    ){
+        if(
+            e.ctrlKey &&
+            e.key === "Enter"
+        ){
 
-        generateQR();
+            generateQR();
+
+        }
 
     }
-
-});
+);
 
 </script>
 
