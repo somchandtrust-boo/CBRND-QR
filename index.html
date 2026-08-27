@@ -31,7 +31,7 @@ body{
     width:100%;
     max-width:460px;
 
-    background:rgba(255,255,255,.96);
+    background:rgba(255,255,255,.97);
 
     border-radius:22px;
 
@@ -45,13 +45,13 @@ body{
     border:1px solid rgba(255,255,255,.8);
 }
 
-/* Header */
+/* HEADER */
 
 .header{
     margin-bottom:22px;
 }
 
-.logo{
+.logoIcon{
     width:60px;
     height:60px;
 
@@ -63,7 +63,8 @@ body{
     align-items:center;
     justify-content:center;
 
-    font-size:28px;
+    font-size:27px;
+    font-weight:bold;
 
     color:white;
 
@@ -95,7 +96,7 @@ h1{
     font-size:14px;
 }
 
-/* Input */
+/* TEXT INPUT */
 
 textarea{
     width:100%;
@@ -126,7 +127,7 @@ textarea:focus{
         0 0 0 4px rgba(99,102,241,.10);
 }
 
-/* Counter */
+/* COUNTER */
 
 .counter{
     text-align:right;
@@ -138,10 +139,16 @@ textarea:focus{
     color:#8b5cf6;
 }
 
-/* Settings */
+/* SETTINGS */
 
-.controls{
+.settings{
     margin-top:14px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
 }
 
 select{
@@ -166,7 +173,114 @@ select:focus{
     border-color:#8b5cf6;
 }
 
-/* Buttons */
+/* LOGO SECTION */
+
+.logo-section{
+    margin-top:14px;
+
+    padding:15px;
+
+    border-radius:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f3ff,
+            #fdf2f8
+        );
+
+    border:1px solid #e9d5ff;
+
+    text-align:left;
+}
+
+.logo-title{
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#374151;
+
+    margin-bottom:10px;
+}
+
+.logo-row{
+    display:flex;
+
+    gap:10px;
+
+    align-items:center;
+}
+
+.logo-upload{
+    flex:1;
+
+    position:relative;
+}
+
+.logo-upload input{
+    width:100%;
+
+    padding:10px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:8px;
+
+    background:white;
+
+    font-size:13px;
+}
+
+.remove-logo{
+    width:auto;
+
+    margin:0;
+
+    padding:10px 13px;
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    font-size:13px;
+
+    display:none;
+}
+
+.remove-logo:hover{
+    background:#fecaca;
+}
+
+/* LOGO SIZE */
+
+.logo-size{
+    margin-top:10px;
+
+    display:none;
+}
+
+.logo-size label{
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:12px;
+
+    color:#6b7280;
+
+    margin-bottom:5px;
+}
+
+.logo-size input{
+    width:100%;
+
+    accent-color:#8b5cf6;
+
+    cursor:pointer;
+}
+
+/* BUTTONS */
 
 button{
     width:100%;
@@ -232,7 +346,7 @@ button{
     transform:translateY(-1px);
 }
 
-/* QR */
+/* QR CARD */
 
 .qr-card{
 
@@ -280,7 +394,7 @@ button{
     border-radius:8px;
 }
 
-/* Error */
+/* ERROR */
 
 .error{
 
@@ -299,7 +413,7 @@ button{
     border-radius:8px;
 }
 
-/* Footer */
+/* INFO */
 
 .info{
 
@@ -336,8 +450,7 @@ button{
     background:#10b981;
 }
 
-
-/* Mobile */
+/* MOBILE */
 
 @media(max-width:500px){
 
@@ -355,18 +468,28 @@ button{
         font-size:24px;
     }
 
+    .logo-row{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .remove-logo{
+        width:100%;
+    }
+
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
+    <!-- HEADER -->
+
     <div class="header">
 
-        <div class="logo">
+        <div class="logoIcon">
             QR
         </div>
 
@@ -378,6 +501,8 @@ button{
 
     </div>
 
+
+    <!-- TEXT -->
 
     <textarea
         id="qrText"
@@ -391,7 +516,9 @@ button{
     </div>
 
 
-    <div class="controls">
+    <!-- ERROR CORRECTION -->
+
+    <div class="settings">
 
         <select id="errorLevel">
 
@@ -407,7 +534,7 @@ button{
                 Error Correction: Q — High
             </option>
 
-            <option value="H">
+            <option value="H" selected>
                 Error Correction: H — Maximum Protection
             </option>
 
@@ -415,6 +542,68 @@ button{
 
     </div>
 
+
+    <!-- LOGO -->
+
+    <div class="logo-section">
+
+        <div class="logo-title">
+            🖼️ Add Logo to QR
+        </div>
+
+        <div class="logo-row">
+
+            <div class="logo-upload">
+
+                <input
+                    type="file"
+                    id="logoInput"
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
+            </div>
+
+            <button
+                type="button"
+                id="removeLogo"
+                class="remove-logo"
+                onclick="removeLogo()"
+            >
+                Remove
+            </button>
+
+        </div>
+
+
+        <div
+            id="logoSizeBox"
+            class="logo-size"
+        >
+
+            <label>
+
+                <span>Logo Size</span>
+
+                <span>
+                    <span id="logoSizeValue">22</span>%
+                </span>
+
+            </label>
+
+            <input
+                type="range"
+                id="logoSize"
+                min="12"
+                max="28"
+                value="22"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- GENERATE -->
 
     <button
         class="generate"
@@ -424,11 +613,15 @@ button{
     </button>
 
 
+    <!-- ERROR -->
+
     <div
         id="error"
         class="error"
     ></div>
 
+
+    <!-- QR -->
 
     <div class="qr-card">
 
@@ -436,6 +629,8 @@ button{
 
     </div>
 
+
+    <!-- DOWNLOAD -->
 
     <button
         id="downloadBtn"
@@ -463,9 +658,19 @@ button{
 </div>
 
 
-<!-- IMPORTANT:
-     Keep your existing local qrcode.js.
-     Do NOT change this line.
+<!--
+====================================================
+IMPORTANT
+
+Keep qrcode.js in the SAME folder as index.html.
+
+Folder:
+
+index.html
+qrcode.js
+
+No internet/CDN required.
+====================================================
 -->
 
 <script src="qrcode.js"></script>
@@ -475,8 +680,12 @@ button{
 
 let currentQR = null;
 
+let uploadedLogo = null;
 
-/* Character Counter */
+
+/* ==========================================
+   CHARACTER COUNTER
+========================================== */
 
 document
 .getElementById("qrText")
@@ -493,7 +702,166 @@ document
 );
 
 
-/* Generate QR */
+/* ==========================================
+   LOGO UPLOAD
+========================================== */
+
+document
+.getElementById("logoInput")
+.addEventListener(
+    "change",
+    function(event){
+
+        const file =
+            event.target.files[0];
+
+        if(!file){
+            return;
+        }
+
+
+        if(!file.type.startsWith("image/")){
+
+            alert("Please select an image.");
+
+            this.value="";
+
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e){
+
+                const img =
+                    new Image();
+
+
+                img.onload =
+                    function(){
+
+                        uploadedLogo =
+                            img;
+
+
+                        document
+                        .getElementById(
+                            "removeLogo"
+                        )
+                        .style.display =
+                            "block";
+
+
+                        document
+                        .getElementById(
+                            "logoSizeBox"
+                        )
+                        .style.display =
+                            "block";
+
+                    };
+
+
+                img.src =
+                    e.target.result;
+
+            };
+
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* ==========================================
+   REMOVE LOGO
+========================================== */
+
+function removeLogo(){
+
+    uploadedLogo = null;
+
+
+    document
+    .getElementById("logoInput")
+    .value = "";
+
+
+    document
+    .getElementById("removeLogo")
+    .style.display =
+        "none";
+
+
+    document
+    .getElementById("logoSizeBox")
+    .style.display =
+        "none";
+
+
+    /*
+    Regenerate QR without logo
+    if QR already exists.
+    */
+
+    if(
+        document
+        .getElementById("qrText")
+        .value
+        .trim()
+    ){
+
+        generateQR();
+
+    }
+
+}
+
+
+/* ==========================================
+   LOGO SIZE
+========================================== */
+
+document
+.getElementById("logoSize")
+.addEventListener(
+    "input",
+    function(){
+
+        document
+        .getElementById("logoSizeValue")
+        .textContent =
+            this.value;
+
+        /*
+        Automatically regenerate
+        when logo size changes.
+        */
+
+        if(
+            uploadedLogo &&
+            document
+            .getElementById("qrText")
+            .value
+            .trim()
+        ){
+
+            generateQR();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   GENERATE QR
+========================================== */
 
 function generateQR(){
 
@@ -503,18 +871,22 @@ function generateQR(){
         .value
         .trim();
 
+
     const level =
         document
         .getElementById("errorLevel")
         .value;
 
+
     const qrBox =
         document
         .getElementById("qrcode");
 
+
     const error =
         document
         .getElementById("error");
+
 
     const download =
         document
@@ -523,9 +895,11 @@ function generateQR(){
 
     qrBox.innerHTML = "";
 
-    download.style.display = "none";
+    download.style.display =
+        "none";
 
-    error.style.display = "none";
+    error.style.display =
+        "none";
 
 
     if(!text){
@@ -547,8 +921,15 @@ function generateQR(){
         */
 
         const qr =
-            qrcode(0,level);
+            qrcode(
+                0,
+                level
+            );
 
+
+        /*
+        Byte mode
+        */
 
         qr.addData(
             text,
@@ -559,7 +940,11 @@ function generateQR(){
         qr.make();
 
 
-        const img =
+        /*
+        Generate QR image.
+        */
+
+        const imgHTML =
             qr.createImgTag(
                 8,
                 12,
@@ -568,22 +953,39 @@ function generateQR(){
 
 
         qrBox.innerHTML =
-            img;
+            imgHTML;
 
 
-        currentQR =
+        const qrImage =
             qrBox.querySelector("img");
 
 
-        if(currentQR){
+        currentQR =
+            qrImage;
 
-            download.style.display =
-                "block";
+
+        /*
+        Add logo after QR loads.
+        */
+
+        if(uploadedLogo){
+
+            addLogoToQR(
+                qrImage,
+                uploadedLogo
+            );
 
         }
 
+
+        download.style.display =
+            "block";
+
     }
     catch(e){
+
+        console.error(e);
+
 
         error.textContent =
             "Text is too long for a single QR code. Please reduce the text.";
@@ -591,14 +993,343 @@ function generateQR(){
         error.style.display =
             "block";
 
-        console.error(e);
+    }
+
+}
+
+
+/* ==========================================
+   ADD LOGO TO QR
+========================================== */
+
+function addLogoToQR(
+    qrImage,
+    logo
+){
+
+    if(!qrImage)
+        return;
+
+
+    const canvas =
+        document.createElement("canvas");
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    /*
+    Wait until QR image is loaded.
+    */
+
+    function draw(){
+
+        const width =
+            qrImage.naturalWidth;
+
+
+        const height =
+            qrImage.naturalHeight;
+
+
+        if(!width || !height)
+            return;
+
+
+        canvas.width =
+            width;
+
+
+        canvas.height =
+            height;
+
+
+        /*
+        White background.
+        */
+
+        ctx.fillStyle =
+            "#ffffff";
+
+
+        ctx.fillRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+
+        /*
+        Draw QR.
+        */
+
+        ctx.imageSmoothingEnabled =
+            false;
+
+
+        ctx.drawImage(
+            qrImage,
+            0,
+            0,
+            width,
+            height
+        );
+
+
+        /*
+        Logo size.
+        */
+
+        const percentage =
+            Number(
+                document
+                .getElementById(
+                    "logoSize"
+                )
+                .value
+            ) / 100;
+
+
+        /*
+        Keep logo reasonably small
+        for reliable scanning.
+        */
+
+        const maxLogo =
+            Math.min(
+                width,
+                height
+            ) * percentage;
+
+
+        let logoWidth =
+            maxLogo;
+
+
+        let logoHeight =
+            maxLogo;
+
+
+        /*
+        Preserve logo aspect ratio.
+        */
+
+        if(
+            logo.naturalWidth >
+            logo.naturalHeight
+        ){
+
+            logoHeight =
+                maxLogo *
+                (
+                    logo.naturalHeight /
+                    logo.naturalWidth
+                );
+
+        }
+        else if(
+            logo.naturalHeight >
+            logo.naturalWidth
+        ){
+
+            logoWidth =
+                maxLogo *
+                (
+                    logo.naturalWidth /
+                    logo.naturalHeight
+                );
+
+        }
+
+
+        const x =
+            (width-logoWidth)/2;
+
+
+        const y =
+            (height-logoHeight)/2;
+
+
+        /*
+        White protection area behind logo.
+        */
+
+        const padding =
+            Math.max(
+                12,
+                maxLogo * .12
+            );
+
+
+        ctx.fillStyle =
+            "#ffffff";
+
+
+        roundRect(
+            ctx,
+            x-padding,
+            y-padding,
+            logoWidth+padding*2,
+            logoHeight+padding*2,
+            12
+        );
+
+
+        ctx.fill();
+
+
+        /*
+        Draw logo.
+        */
+
+        ctx.imageSmoothingEnabled =
+            true;
+
+
+        ctx.drawImage(
+            logo,
+            x,
+            y,
+            logoWidth,
+            logoHeight
+        );
+
+
+        /*
+        Replace displayed QR
+        with final canvas image.
+        */
+
+        const finalImage =
+            document.createElement("img");
+
+
+        finalImage.src =
+            canvas.toDataURL(
+                "image/png"
+            );
+
+
+        finalImage.alt =
+            "QR Code with Logo";
+
+
+        finalImage.style.maxWidth =
+            "100%";
+
+
+        finalImage.style.height =
+            "auto";
+
+
+        finalImage.style.imageRendering =
+            "pixelated";
+
+
+        qrImage.replaceWith(
+            finalImage
+        );
+
+
+        currentQR =
+            finalImage;
+
+    }
+
+
+    if(qrImage.complete){
+
+        draw();
+
+    }
+    else{
+
+        qrImage.onload =
+            draw;
 
     }
 
 }
 
 
-/* Download PNG */
+/* ==========================================
+   ROUNDED RECTANGLE
+========================================== */
+
+function roundRect(
+    ctx,
+    x,
+    y,
+    width,
+    height,
+    radius
+){
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        x+radius,
+        y
+    );
+
+    ctx.lineTo(
+        x+width-radius,
+        y
+    );
+
+    ctx.quadraticCurveTo(
+        x+width,
+        y,
+        x+width,
+        y+radius
+    );
+
+    ctx.lineTo(
+        x+width,
+        y+height-radius
+    );
+
+    ctx.quadraticCurveTo(
+        x+width,
+        y+height,
+        x+width-radius,
+        y+height
+    );
+
+    ctx.lineTo(
+        x+radius,
+        y+height
+    );
+
+    ctx.quadraticCurveTo(
+        x,
+        y+height,
+        x,
+        y+height-radius
+    );
+
+    ctx.lineTo(
+        x,
+        y+radius
+    );
+
+    ctx.quadraticCurveTo(
+        x,
+        y,
+        x+radius,
+        y
+    );
+
+    ctx.closePath();
+
+}
+
+
+/* ==========================================
+   DOWNLOAD FINAL QR
+========================================== */
 
 function downloadQR(){
 
@@ -609,12 +1340,14 @@ function downloadQR(){
     const canvas =
         document.createElement("canvas");
 
+
     const ctx =
         canvas.getContext("2d");
 
 
     canvas.width =
         currentQR.naturalWidth;
+
 
     canvas.height =
         currentQR.naturalHeight;
@@ -636,7 +1369,9 @@ function downloadQR(){
 
 
     link.download =
-        "qr-code.png";
+        uploadedLogo
+        ? "qr-code-with-logo.png"
+        : "qr-code.png";
 
 
     link.href =
@@ -647,14 +1382,18 @@ function downloadQR(){
 
     document.body.appendChild(link);
 
+
     link.click();
+
 
     document.body.removeChild(link);
 
 }
 
 
-/* Ctrl + Enter */
+/* ==========================================
+   CTRL + ENTER
+========================================== */
 
 document
 .getElementById("qrText")
