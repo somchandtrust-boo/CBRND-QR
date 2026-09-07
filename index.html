@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>myQR - Offline QR Generator</title>
+<title>QR Luxury - Offline QR Generator</title>
 
 <style>
 *{
@@ -13,869 +13,1374 @@
     padding:0;
 }
 
+:root{
+    --gold:#d9a441;
+    --gold2:#ffd76a;
+    --gold3:#fff0ad;
+    --black:#020304;
+    --dark:#070b10;
+    --panel:#0b1118;
+    --text:#fff8df;
+}
+
 html{
     scroll-behavior:smooth;
 }
 
 body{
     min-height:100vh;
+    overflow-x:hidden;
+
     font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
         Arial,
+        Helvetica,
         sans-serif;
 
-    color:#172033;
+    color:white;
 
     background:
-        radial-gradient(circle at 10% 10%,rgba(99,102,241,.18),transparent 28%),
-        radial-gradient(circle at 90% 15%,rgba(236,72,153,.15),transparent 30%),
-        radial-gradient(circle at 50% 100%,rgba(14,165,233,.16),transparent 35%),
-        linear-gradient(135deg,#f8fbff,#eef4ff);
-
-    overflow-x:hidden;
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(175,115,20,.14),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 10%,
+            rgba(255,183,0,.10),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #020304,
+            #070b10 50%,
+            #010203
+        );
 }
 
-/* =========================
+/* =================================
+   GOLD LIGHT EFFECT
+================================= */
+
+body::before{
+    content:"";
+
+    position:fixed;
+    inset:-30%;
+
+    pointer-events:none;
+
+    background:
+        repeating-linear-gradient(
+            120deg,
+            transparent 0px,
+            transparent 130px,
+            rgba(255,193,7,.025) 132px,
+            transparent 136px
+        );
+
+    transform:rotate(-5deg);
+
+    z-index:-1;
+}
+
+/* =================================
    NAVBAR
-========================= */
+================================= */
 
 .navbar{
-    position:sticky;
+    position:fixed;
+
     top:0;
+    left:0;
+    right:0;
+
+    height:74px;
+
     z-index:1000;
-
-    width:100%;
-
-    padding:16px 6%;
-
-    background:rgba(255,255,255,.72);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-
-    border-bottom:1px solid rgba(255,255,255,.7);
-
-    box-shadow:
-        0 8px 30px rgba(31,41,55,.08);
-}
-
-.nav-inner{
-    max-width:1200px;
-    margin:auto;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
+
+    padding:10px 25px;
+
+    background:
+        rgba(2,3,4,.78);
+
+    backdrop-filter:blur(15px);
+
+    border-bottom:
+        1px solid rgba(218,164,65,.25);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.5);
 }
 
 .brand{
     display:flex;
     align-items:center;
-    gap:12px;
 
-    text-decoration:none;
-    color:#172033;
+    gap:12px;
 }
 
-.brand-icon{
-    width:44px;
-    height:44px;
+.brand img{
+    width:48px;
+    height:48px;
+
+    object-fit:contain;
+
+    filter:
+        drop-shadow(0 0 10px rgba(255,194,62,.45));
+}
+
+.brand-name{
+    font-size:20px;
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    color:var(--gold2);
+}
+
+.status{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    padding:9px 15px;
+
+    border-radius:30px;
+
+    border:1px solid rgba(255,210,90,.35);
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:#ddd;
+
+    font-size:12px;
+}
+
+.status-dot{
+    width:9px;
+    height:9px;
+
+    border-radius:50%;
+
+    background:#00e676;
+
+    box-shadow:
+        0 0 12px #00e676;
+}
+
+/* =================================
+   MAIN
+================================= */
+
+.main{
+    min-height:100vh;
+
+    padding:
+        105px 25px 50px;
+
+    max-width:1450px;
+
+    margin:auto;
+}
+
+/* =================================
+   DASHBOARD GRID
+================================= */
+
+.dashboard{
+    display:grid;
+
+    grid-template-columns:
+        240px
+        1fr
+        1.45fr;
+
+    gap:20px;
+
+    min-height:calc(100vh - 155px);
+}
+
+/* =================================
+   SIDEBAR
+================================= */
+
+.sidebar{
+    position:relative;
+
+    border-radius:25px;
+
+    padding:20px 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,18,18,.96),
+            rgba(3,5,7,.96)
+        );
+
+    border:
+        1px solid rgba(218,164,65,.45);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.55),
+        inset 0 0 30px rgba(255,185,40,.025);
+
+    overflow:hidden;
+}
+
+.sidebar::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--gold2),
+            transparent
+        );
+
+    box-shadow:
+        0 0 20px var(--gold);
+}
+
+.logo-area{
+    text-align:center;
+
+    padding:10px 5px 25px;
+}
+
+.logo-area img{
+    width:175px;
+    max-width:100%;
+
+    object-fit:contain;
+
+    filter:
+        drop-shadow(
+            0 0 18px
+            rgba(255,195,65,.35)
+        );
+}
+
+.menu{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+}
+
+.menu-btn{
+    position:relative;
 
     display:flex;
     align-items:center;
-    justify-content:center;
 
-    border-radius:14px;
+    gap:14px;
+
+    width:100%;
+
+    padding:16px 15px;
+
+    border:none;
+
+    border-radius:16px;
+
+    color:#aaa;
 
     background:
-        linear-gradient(135deg,#6366f1,#8b5cf6);
+        transparent;
 
-    color:white;
+    font-size:15px;
 
-    font-size:23px;
+    text-align:left;
 
-    box-shadow:
-        0 10px 25px rgba(99,102,241,.30),
-        inset 0 1px 0 rgba(255,255,255,.45);
+    cursor:pointer;
+
+    transition:
+        transform .25s,
+        color .25s,
+        background .25s,
+        box-shadow .25s;
 }
 
-.brand-text{
+.menu-btn span:first-child{
     font-size:22px;
-    font-weight:800;
-    letter-spacing:-.5px;
-}
 
-.brand-text span{
-    color:#6366f1;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-    max-width:1100px;
-    margin:0 auto;
-
-    padding:80px 20px 45px;
+    width:30px;
 
     text-align:center;
 }
 
-.hero-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-
-    padding:9px 16px;
-
-    border-radius:999px;
-
-    background:rgba(255,255,255,.72);
-    border:1px solid rgba(255,255,255,.9);
-
-    color:#4f46e5;
-
-    font-size:13px;
-    font-weight:700;
-
-    box-shadow:
-        0 8px 25px rgba(31,41,55,.08);
-}
-
-.hero h1{
-    margin-top:22px;
-
-    font-size:clamp(42px,7vw,76px);
-
-    line-height:1.02;
-
-    letter-spacing:-3px;
-
-    font-weight:900;
+.menu-btn:hover,
+.menu-btn.active{
+    color:white;
 
     background:
         linear-gradient(
-            135deg,
-            #111827 10%,
-            #4f46e5 48%,
-            #9333ea 85%
+            90deg,
+            rgba(218,164,65,.24),
+            rgba(218,164,65,.04)
+        );
+
+    box-shadow:
+        inset 0 0 20px rgba(218,164,65,.08),
+        0 0 15px rgba(218,164,65,.08);
+}
+
+.menu-btn.active::before{
+    content:"";
+
+    position:absolute;
+
+    left:-1px;
+
+    top:12px;
+    bottom:12px;
+
+    width:3px;
+
+    border-radius:5px;
+
+    background:var(--gold2);
+
+    box-shadow:
+        0 0 12px var(--gold2);
+}
+
+.sidebar-bottom{
+    position:absolute;
+
+    left:15px;
+    right:15px;
+    bottom:18px;
+
+    text-align:center;
+
+    color:#9d7d38;
+
+    font-size:10px;
+
+    letter-spacing:.5px;
+}
+
+/* =================================
+   WELCOME PANEL
+================================= */
+
+.welcome{
+    position:relative;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    padding:45px;
+
+    min-height:650px;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    background:
+        radial-gradient(
+            circle at 60% 50%,
+            rgba(218,164,65,.12),
+            transparent 32%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(13,17,22,.98),
+            rgba(3,5,7,.96)
+        );
+
+    border:
+        1px solid rgba(218,164,65,.4);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.55),
+        inset 0 0 50px rgba(255,194,55,.025);
+}
+
+.welcome::before{
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+    height:500px;
+
+    right:-250px;
+    top:-200px;
+
+    border-radius:50%;
+
+    border:
+        1px solid rgba(255,205,75,.16);
+
+    box-shadow:
+        0 0 100px rgba(255,190,40,.05);
+}
+
+.welcome-small{
+    color:var(--gold2);
+
+    font-family:Georgia,serif;
+
+    font-size:25px;
+
+    margin-bottom:5px;
+}
+
+.welcome h1{
+    font-family:Georgia,serif;
+
+    font-size:
+        clamp(55px,6vw,90px);
+
+    line-height:1;
+
+    margin-bottom:25px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff6ca,
+            #ffd96b 45%,
+            #b57919
         );
 
     -webkit-background-clip:text;
     background-clip:text;
 
     color:transparent;
+
+    text-shadow:
+        0 0 25px rgba(255,191,50,.15);
 }
 
-.hero p{
-    max-width:680px;
+.welcome p{
+    max-width:520px;
 
-    margin:22px auto 30px;
+    color:#aaa;
 
-    font-size:18px;
-    line-height:1.7;
+    font-size:16px;
 
-    color:#667085;
+    line-height:1.8;
+
+    margin-bottom:45px;
 }
 
-.hero-button{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
+/* =================================
+   3D CREATE BUTTON
+================================= */
 
-    min-width:190px;
-
-    padding:15px 25px;
-
-    border:none;
-    border-radius:16px;
-
-    color:white;
-    background:
-        linear-gradient(135deg,#4f46e5,#7c3aed);
-
-    font-size:15px;
-    font-weight:800;
-
-    cursor:pointer;
-
-    text-decoration:none;
-
-    box-shadow:
-        0 14px 30px rgba(79,70,229,.30);
-
-    transition:.25s ease;
-}
-
-.hero-button:hover{
-    transform:translateY(-3px);
-
-    box-shadow:
-        0 18px 35px rgba(79,70,229,.38);
-}
-
-/* =========================
-   GENERATOR AREA
-========================= */
-
-.generator-section{
-    max-width:1100px;
-    margin:0 auto;
-
-    padding:20px 20px 80px;
-}
-
-.generator-card{
+.create-wrap{
     position:relative;
 
-    display:grid;
-    grid-template-columns:1fr 1fr;
+    width:100%;
+    max-width:500px;
 
-    gap:28px;
+    margin:auto auto 20px;
+}
 
-    padding:30px;
+.create-button{
+    position:relative;
 
-    border-radius:30px;
+    width:100%;
+
+    min-height:120px;
+
+    padding:25px 35px;
+
+    border-radius:24px;
+
+    border:
+        2px solid #d9a441;
+
+    color:#fff2bd;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.90),
-            rgba(246,249,255,.78)
+            #201608,
+            #080b0e 45%,
+            #181006
         );
 
-    border:1px solid rgba(255,255,255,.9);
+    font-family:Georgia,serif;
 
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
+    font-size:24px;
+
+    font-weight:bold;
+
+    letter-spacing:.5px;
+
+    cursor:pointer;
+
+    transform:
+        perspective(700px)
+        rotateX(5deg);
 
     box-shadow:
-        0 30px 70px rgba(31,41,55,.12),
-        0 8px 20px rgba(99,102,241,.06),
-        inset 0 1px 0 rgba(255,255,255,.95);
+        0 8px 0 #6f4910,
+        0 15px 30px rgba(0,0,0,.8),
+        inset 0 0 20px rgba(255,190,50,.13),
+        0 0 25px rgba(255,180,20,.20);
+
+    transition:
+        transform .15s,
+        box-shadow .15s;
 }
 
-/* =========================
-   LEFT SIDE
-========================= */
+.create-button::before{
+    content:"";
 
-.generator-left{
-    padding:10px;
+    position:absolute;
+
+    inset:5px;
+
+    border-radius:18px;
+
+    border:
+        1px solid rgba(255,224,130,.35);
+
+    pointer-events:none;
+}
+
+.create-button:hover{
+    transform:
+        perspective(700px)
+        rotateX(2deg)
+        translateY(-3px);
+
+    box-shadow:
+        0 11px 0 #6f4910,
+        0 22px 45px rgba(0,0,0,.85),
+        inset 0 0 30px rgba(255,190,50,.18),
+        0 0 40px rgba(255,180,20,.30);
+}
+
+.create-button:active,
+.create-button.fire{
+    transform:
+        perspective(700px)
+        rotateX(0deg)
+        translateY(7px);
+
+    box-shadow:
+        0 2px 0 #6f4910,
+        0 8px 15px rgba(0,0,0,.8),
+        0 0 60px rgba(255,170,0,.8);
+}
+
+.button-content{
+    position:relative;
+    z-index:2;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:20px;
+}
+
+.button-icon{
+    font-size:32px;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255,210,80,.7)
+        );
+}
+
+.button-arrow{
+    font-size:32px;
+
+    transition:.25s;
+}
+
+.create-button:hover .button-arrow{
+    transform:translateX(8px);
+}
+
+/* =================================
+   SPARKS
+================================= */
+
+.sparks{
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    overflow:hidden;
+
+    opacity:0;
+
+    z-index:5;
+}
+
+.create-button.fire .sparks{
+    opacity:1;
+}
+
+.spark{
+    position:absolute;
+
+    width:4px;
+    height:4px;
+
+    border-radius:50%;
+
+    background:#fff0a5;
+
+    box-shadow:
+        0 0 8px #ffd45c,
+        0 0 18px #ff9d00;
+
+    animation:
+        sparkFly .7s ease-out forwards;
+}
+
+.spark:nth-child(1){
+    left:50%;
+    top:50%;
+    --x:-160px;
+    --y:-90px;
+}
+
+.spark:nth-child(2){
+    left:50%;
+    top:50%;
+    --x:170px;
+    --y:-100px;
+}
+
+.spark:nth-child(3){
+    left:50%;
+    top:50%;
+    --x:-180px;
+    --y:70px;
+}
+
+.spark:nth-child(4){
+    left:50%;
+    top:50%;
+    --x:180px;
+    --y:80px;
+}
+
+.spark:nth-child(5){
+    left:50%;
+    top:50%;
+    --x:-70px;
+    --y:-130px;
+}
+
+.spark:nth-child(6){
+    left:50%;
+    top:50%;
+    --x:80px;
+    --y:130px;
+}
+
+.spark:nth-child(7){
+    left:50%;
+    top:50%;
+    --x:-230px;
+    --y:10px;
+}
+
+.spark:nth-child(8){
+    left:50%;
+    top:50%;
+    --x:230px;
+    --y:-10px;
+}
+
+@keyframes sparkFly{
+    from{
+        transform:translate(-50%,-50%) scale(1);
+        opacity:1;
+    }
+
+    to{
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            scale(.1);
+
+        opacity:0;
+    }
+}
+
+/* =================================
+   FIRING FLASH
+================================= */
+
+.flash{
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,220,110,.45),
+            transparent 40%
+        );
+
+    opacity:0;
+
+    z-index:9999;
+}
+
+.flash.active{
+    animation:
+        flashFire .45s ease-out;
+}
+
+@keyframes flashFire{
+    0%{
+        opacity:0;
+    }
+
+    15%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+/* =================================
+   GENERATOR
+================================= */
+
+.generator{
+    display:none;
+
+    min-height:650px;
+
+    padding:25px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(11,17,24,.98),
+            rgba(2,5,8,.98)
+        );
+
+    border:
+        1px solid rgba(218,164,65,.55);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.7),
+        inset 0 0 30px rgba(255,180,30,.03);
+
+    animation:
+        generatorOpen .6s ease forwards;
+}
+
+.generator.show{
+    display:block;
+}
+
+@keyframes generatorOpen{
+    from{
+        opacity:0;
+        transform:
+            perspective(1000px)
+            rotateY(-12deg)
+            translateX(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            perspective(1000px)
+            rotateY(0)
+            translateX(0);
+    }
+}
+
+.generator-header{
+    display:flex;
+
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:20px;
 }
 
 .generator-title{
-    font-size:28px;
-    font-weight:850;
+    font-family:Georgia,serif;
 
-    color:#111827;
+    font-size:27px;
 
-    margin-bottom:8px;
+    color:#ffe28a;
 }
 
-.generator-subtitle{
-    color:#667085;
-    font-size:14px;
-    line-height:1.6;
+.close-btn{
+    width:38px;
+    height:38px;
 
-    margin-bottom:22px;
+    border-radius:50%;
+
+    border:
+        1px solid rgba(255,205,80,.4);
+
+    background:#0c1219;
+
+    color:#ffd76a;
+
+    font-size:22px;
+
+    cursor:pointer;
 }
 
-/* =========================
+/* =================================
    FORM
-========================= */
+================================= */
 
 .label{
     display:block;
 
-    margin-bottom:8px;
+    margin:
+        13px 0 7px;
+
+    color:#f4d47c;
 
     font-size:13px;
-    font-weight:800;
 
-    color:#344054;
+    font-weight:bold;
+}
+
+textarea{
+    width:100%;
+
+    min-height:130px;
+
+    resize:vertical;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    border:
+        1px solid #39434f;
+
+    outline:none;
+
+    background:#080e15;
+
+    color:white;
+
+    font-family:Arial,sans-serif;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    box-shadow:
+        inset 0 0 15px rgba(0,0,0,.5);
+}
+
+textarea:focus{
+    border-color:#d9a441;
+
+    box-shadow:
+        0 0 15px rgba(218,164,65,.13),
+        inset 0 0 15px rgba(0,0,0,.5);
 }
 
 .textarea-wrap{
     position:relative;
 }
 
-textarea{
-    width:100%;
-    min-height:165px;
-
-    resize:vertical;
-
-    padding:17px 17px 35px;
-
-    border:1px solid #dbe2f0;
-    border-radius:18px;
-
-    outline:none;
-
-    background:rgba(255,255,255,.82);
-
-    color:#172033;
-
-    font-family:inherit;
-    font-size:15px;
-    line-height:1.6;
-
-    box-shadow:
-        inset 0 2px 8px rgba(31,41,55,.03);
-
-    transition:.2s ease;
-}
-
-textarea:focus{
-    border-color:#818cf8;
-
-    box-shadow:
-        0 0 0 4px rgba(99,102,241,.10),
-        inset 0 2px 8px rgba(31,41,55,.03);
-}
-
 .counter{
     position:absolute;
 
-    right:13px;
-    bottom:10px;
+    right:12px;
+    bottom:9px;
 
-    font-size:11px;
+    color:#777;
 
-    color:#98a2b3;
+    font-size:10px;
 }
-
-/* =========================
-   OPTIONS
-========================= */
 
 .options{
-    margin-top:20px;
-
     display:grid;
-    grid-template-columns:1fr 1fr;
 
-    gap:15px;
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:12px;
 }
 
-.option-box{
-    padding:15px;
+.option{
+    padding:12px;
 
-    border-radius:17px;
+    border-radius:14px;
 
-    background:rgba(255,255,255,.70);
+    background:#080e15;
 
-    border:1px solid #e4e9f3;
+    border:
+        1px solid #303a45;
 }
 
 select{
     width:100%;
 
-    padding:12px 13px;
+    padding:12px;
 
-    border-radius:12px;
+    border-radius:10px;
 
-    border:1px solid #dbe2f0;
+    border:
+        1px solid #37414c;
 
-    background:white;
+    background:#0b121a;
 
-    color:#172033;
+    color:white;
 
     outline:none;
-
-    font-family:inherit;
-    font-size:14px;
 
     cursor:pointer;
 }
 
-select:focus{
-    border-color:#818cf8;
-}
+.logo-box{
+    padding:14px;
 
-/* =========================
-   LOGO
-========================= */
+    margin-top:10px;
 
-.logo-section{
-    margin-top:18px;
+    border-radius:14px;
 
-    padding:18px;
+    border:
+        1px solid #303a45;
 
-    border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(245,247,255,.95),
-            rgba(255,255,255,.75)
-        );
-
-    border:1px solid #e4e9f3;
+    background:#080e15;
 }
 
 .logo-row{
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
-    gap:15px;
+
+    gap:10px;
 }
 
-.logo-info{
-    min-width:0;
-}
-
-.logo-title{
-    font-size:14px;
-    font-weight:800;
-
-    color:#344054;
-}
-
-.logo-description{
-    margin-top:4px;
-
-    font-size:12px;
-
-    color:#98a2b3;
-}
-
-.file-label{
-    flex-shrink:0;
+.upload{
+    display:inline-block;
 
     padding:10px 14px;
 
-    border-radius:12px;
+    border-radius:10px;
 
-    background:#eef2ff;
+    background:
+        linear-gradient(
+            145deg,
+            #2b2110,
+            #0c1015
+        );
 
-    color:#4f46e5;
+    border:
+        1px solid #c59635;
+
+    color:#ffd96b;
 
     font-size:12px;
-    font-weight:800;
+
+    font-weight:bold;
 
     cursor:pointer;
-
-    border:1px solid #e0e7ff;
-
-    transition:.2s ease;
-}
-
-.file-label:hover{
-    background:#e0e7ff;
 }
 
 #logoInput{
     display:none;
 }
 
-.remove-logo{
+.remove{
     display:none;
 
-    margin-top:12px;
+    margin-top:10px;
 
     width:100%;
 
-    padding:9px;
+    padding:8px;
 
     border:none;
 
-    border-radius:10px;
+    border-radius:9px;
 
-    background:#fff1f2;
+    background:#381217;
 
-    color:#e11d48;
-
-    font-size:12px;
-    font-weight:700;
+    color:#ff7474;
 
     cursor:pointer;
 }
 
-.logo-size-box{
+.logo-size{
     display:none;
 
     margin-top:14px;
 }
 
-.logo-size-head{
+.size-head{
     display:flex;
+
     justify-content:space-between;
 
-    margin-bottom:7px;
+    color:#aaa;
 
-    font-size:12px;
-    font-weight:700;
+    font-size:11px;
 
-    color:#667085;
+    margin-bottom:5px;
 }
 
 input[type="range"]{
     width:100%;
 
-    accent-color:#6366f1;
+    accent-color:#e2ae43;
 
     cursor:pointer;
 }
 
-/* =========================
-   GENERATE BUTTON
-========================= */
+/* =================================
+   GENERATE / DOWNLOAD
+================================= */
 
-.generate-btn{
-    width:100%;
+.actions{
+    display:grid;
 
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:10px;
+
+    margin-top:15px;
+}
+
+.generate{
+    padding:14px;
+
+    border-radius:13px;
+
+    border:
+        1px solid #f0bd4e;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd86d,
+            #a96d10
+        );
+
+    color:#090b0d;
+
+    font-size:14px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 7px 20px rgba(218,164,65,.22);
+
+    transition:.2s;
+}
+
+.generate:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(218,164,65,.35);
+}
+
+.download{
+    display:none;
+
+    padding:14px;
+
+    border-radius:13px;
+
+    border:
+        1px solid #d9a441;
+
+    background:#0b1118;
+
+    color:#ffd76a;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+/* =================================
+   QR PREVIEW
+================================= */
+
+.preview{
     margin-top:20px;
 
-    padding:16px 20px;
+    min-height:250px;
 
-    border:none;
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
 
     border-radius:16px;
 
     background:
-        linear-gradient(
-            135deg,
-            #4f46e5,
-            #7c3aed
+        radial-gradient(
+            circle,
+            #151c24,
+            #070b10
         );
 
-    color:white;
-
-    font-family:inherit;
-
-    font-size:15px;
-    font-weight:850;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 14px 28px rgba(79,70,229,.25);
-
-    transition:.25s ease;
+    border:
+        1px solid rgba(218,164,65,.28);
 }
 
-.generate-btn:hover{
-    transform:translateY(-2px);
+.preview-title{
+    color:#ffd76a;
 
-    box-shadow:
-        0 18px 34px rgba(79,70,229,.34);
+    font-size:12px;
+
+    margin-bottom:15px;
 }
 
-.generate-btn:active{
-    transform:translateY(0);
+#qrcode{
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    width:100%;
 }
 
-/* =========================
-   ERROR
-========================= */
+#qrcode img{
+    max-width:210px;
+
+    height:auto;
+
+    background:white;
+
+    image-rendering:pixelated;
+}
+
+.empty{
+    text-align:center;
+
+    color:#666;
+
+    font-size:12px;
+}
 
 .error{
     display:none;
 
-    margin-top:13px;
+    margin-top:10px;
 
-    padding:12px 14px;
+    padding:10px;
 
-    border-radius:12px;
+    border-radius:10px;
 
-    background:#fff1f2;
+    background:#351217;
 
-    border:1px solid #fecdd3;
-
-    color:#be123c;
-
-    font-size:13px;
-    line-height:1.5;
-}
-
-/* =========================
-   RIGHT SIDE / QR PREVIEW
-========================= */
-
-.generator-right{
-    display:flex;
-    flex-direction:column;
-
-    min-width:0;
-}
-
-.preview-title{
-    font-size:18px;
-    font-weight:850;
-
-    color:#111827;
-
-    margin-bottom:13px;
-}
-
-.qr-preview{
-    flex:1;
-
-    min-height:450px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:25px;
-
-    border-radius:24px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(255,255,255,.98),
-            rgba(244,247,255,.85)
-        );
-
-    border:1px solid #e3e8f4;
-
-    box-shadow:
-        inset 0 2px 12px rgba(31,41,55,.025);
-}
-
-#qrcode{
-    width:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    min-height:300px;
-}
-
-#qrcode img{
-    max-width:100%;
-    height:auto;
-
-    image-rendering:pixelated;
-
-    border-radius:3px;
-}
-
-.empty-preview{
-    text-align:center;
-
-    color:#98a2b3;
-}
-
-.empty-icon{
-    width:70px;
-    height:70px;
-
-    margin:0 auto 15px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:20px;
-
-    background:#eef2ff;
-
-    color:#6366f1;
-
-    font-size:32px;
-}
-
-.empty-preview strong{
-    display:block;
-
-    margin-bottom:5px;
-
-    color:#667085;
-
-    font-size:14px;
-}
-
-.empty-preview span{
-    font-size:12px;
-}
-
-/* =========================
-   DOWNLOAD BUTTON
-========================= */
-
-.download-btn{
-    display:none;
-
-    width:100%;
-
-    margin-top:15px;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #0f766e,
-            #059669
-        );
-
-    color:white;
-
-    font-family:inherit;
-
-    font-size:14px;
-    font-weight:850;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 12px 25px rgba(5,150,105,.20);
-
-    transition:.25s ease;
-}
-
-.download-btn:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 16px 30px rgba(5,150,105,.28);
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-    padding:28px 20px 35px;
-
-    text-align:center;
-
-    color:#98a2b3;
+    color:#ff7777;
 
     font-size:12px;
 }
 
-footer strong{
-    color:#667085;
+/* =================================
+   FIRE MESSAGE
+================================= */
+
+.fire-message{
+    text-align:center;
+
+    color:#d9a441;
+
+    font-size:11px;
+
+    margin-top:12px;
+
+    opacity:.8;
 }
 
-/* =========================
+/* =================================
    MOBILE
-========================= */
+================================= */
 
-@media(max-width:850px){
+@media(max-width:1100px){
 
-    .hero{
-        padding-top:55px;
+    .dashboard{
+        grid-template-columns:
+            210px
+            1fr;
     }
 
-    .hero h1{
-        letter-spacing:-2px;
-    }
-
-    .generator-card{
-        grid-template-columns:1fr;
-
-        padding:20px;
-
-        border-radius:24px;
-    }
-
-    .qr-preview{
-        min-height:360px;
+    .generator{
+        grid-column:1 / -1;
     }
 }
 
-@media(max-width:600px){
+@media(max-width:750px){
 
     .navbar{
-        padding:12px 18px;
+        padding:8px 14px;
     }
 
-    .brand-icon{
-        width:40px;
-        height:40px;
-
-        border-radius:12px;
+    .brand-name{
+        font-size:16px;
     }
 
-    .brand-text{
-        font-size:19px;
+    .status{
+        padding:8px 10px;
     }
 
-    .hero{
-        padding:45px 17px 30px;
+    .main{
+        padding:
+            90px 12px 25px;
     }
 
-    .hero h1{
-        font-size:43px;
+    .dashboard{
+        display:flex;
 
-        letter-spacing:-2px;
-    }
-
-    .hero p{
-        font-size:15px;
-
-        line-height:1.6;
-    }
-
-    .generator-section{
-        padding:10px 12px 55px;
-    }
-
-    .generator-card{
-        padding:16px;
-
-        gap:20px;
-    }
-
-    .generator-left{
-        padding:4px;
-    }
-
-    .generator-title{
-        font-size:24px;
-    }
-
-    .options{
-        grid-template-columns:1fr;
-    }
-
-    .logo-row{
-        align-items:flex-start;
         flex-direction:column;
     }
 
-    .file-label{
-        width:100%;
+    .sidebar{
+        min-height:auto;
+
+        padding:10px;
+    }
+
+    .logo-area{
+        padding:5px 5px 12px;
+    }
+
+    .logo-area img{
+        width:130px;
+    }
+
+    .menu{
+        flex-direction:row;
+        justify-content:center;
+    }
+
+    .menu-btn{
+        width:auto;
+
+        padding:11px;
+
+        justify-content:center;
+    }
+
+    .menu-btn span:last-child{
+        display:none;
+    }
+
+    .sidebar-bottom{
+        display:none;
+    }
+
+    .welcome{
+        min-height:530px;
+
+        padding:28px 20px;
+
         text-align:center;
     }
 
-    .qr-preview{
-        min-height:310px;
+    .welcome-small{
+        font-size:20px;
+    }
+
+    .welcome h1{
+        font-size:55px;
+    }
+
+    .welcome p{
+        font-size:14px;
+
+        margin-bottom:30px;
+    }
+
+    .create-button{
+        min-height:95px;
+
+        font-size:18px;
+    }
+
+    .generator{
+        min-height:auto;
 
         padding:18px;
     }
 
-    #qrcode{
-        min-height:250px;
-    }
-
-    #qrcode img{
-        max-width:90%;
+    .options,
+    .actions{
+        grid-template-columns:1fr;
     }
 }
 
-@media(max-width:380px){
+@media(max-width:420px){
 
-    .hero h1{
-        font-size:37px;
+    .status{
+        display:none;
     }
 
-    .generator-card{
-        padding:13px;
+    .welcome h1{
+        font-size:45px;
+    }
+
+    .button-content{
+        gap:10px;
+    }
+
+    .button-icon{
+        font-size:25px;
+    }
+
+    .button-arrow{
+        font-size:24px;
     }
 }
 </style>
@@ -883,105 +1388,214 @@ footer strong{
 
 <body>
 
-<!-- =========================
+<div class="flash" id="flash"></div>
+
+<!-- =================================
      NAVBAR
-========================= -->
+================================= -->
 
 <nav class="navbar">
-    <div class="nav-inner">
 
-        <a href="#" class="brand">
+    <div class="brand">
 
-            <div class="brand-icon">
-                ⬛
-            </div>
+        <img src="logo.png" alt="QR Luxury">
 
-            <div class="brand-text">
-                my<span>QR</span>
-            </div>
-
-        </a>
+        <div class="brand-name">
+            QR LUXURY
+        </div>
 
     </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        Offline Mode
+    </div>
+
 </nav>
 
 
-<!-- =========================
-     HERO
-========================= -->
+<!-- =================================
+     MAIN
+================================= -->
 
-<section class="hero">
+<main class="main">
 
-    <div class="hero-badge">
-        ⚡ High Capacity • 100% Offline
-    </div>
-
-    <h1>
-        Create QR Codes
-    </h1>
-
-    <p>
-        Generate professional QR codes instantly.
-        Add your logo, choose error correction,
-        and download your QR code directly —
-        completely offline.
-    </p>
-
-    <a href="#generator" class="hero-button">
-        Create QR Code
-    </a>
-
-</section>
+    <div class="dashboard">
 
 
-<!-- =========================
-     QR GENERATOR
-========================= -->
+        <!-- =================================
+             SIDEBAR
+        ================================= -->
 
-<section class="generator-section" id="generator">
+        <aside class="sidebar">
 
-    <div class="generator-card">
+            <div class="logo-area">
 
-        <!-- LEFT -->
+                <img
+                    src="logo.png"
+                    alt="QR Luxury Logo"
+                >
 
-        <div class="generator-left">
-
-            <div class="generator-title">
-                QR Generator
-            </div>
-
-            <div class="generator-subtitle">
-                Enter any text, URL or information
-                and create your QR code locally.
             </div>
 
 
-            <!-- TEXT -->
+            <div class="menu">
 
-            <label class="label" for="qrText">
-                Text or URL
+                <button
+                    class="menu-btn active"
+                    onclick="showHome()"
+                >
+                    <span>⌂</span>
+                    <span>Home</span>
+                </button>
+
+                <button
+                    class="menu-btn"
+                    onclick="openGenerator()"
+                >
+                    <span>▦</span>
+                    <span>QR Generator</span>
+                </button>
+
+                <button
+                    class="menu-btn"
+                    onclick="showSettings()"
+                >
+                    <span>⚙</span>
+                    <span>Settings</span>
+                </button>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+                Simple • Fast • High Capacity • Offline
+            </div>
+
+        </aside>
+
+
+        <!-- =================================
+             WELCOME
+        ================================= -->
+
+        <section
+            class="welcome"
+            id="welcome"
+        >
+
+            <div class="welcome-small">
+                Welcome to
+            </div>
+
+            <h1>
+                My QR
+            </h1>
+
+            <p>
+                Create professional QR codes instantly.
+                Add your logo, choose error correction,
+                and download your QR code directly —
+                completely offline.
+            </p>
+
+
+            <div class="create-wrap">
+
+                <button
+                    class="create-button"
+                    id="createButton"
+                    onclick="fireAndOpen()"
+                >
+
+                    <div class="button-content">
+
+                        <span class="button-icon">
+                            ▦
+                        </span>
+
+                        <span>
+                            Create QR Code
+                        </span>
+
+                        <span class="button-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+
+                    <div class="sparks">
+
+                        <span class="spark"></span>
+                        <span class="spark"></span>
+                        <span class="spark"></span>
+                        <span class="spark"></span>
+                        <span class="spark"></span>
+                        <span class="spark"></span>
+                        <span class="spark"></span>
+                        <span class="spark"></span>
+
+                    </div>
+
+                </button>
+
+                <div class="fire-message">
+                    🔊 Touch / Click — Firing Effect
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             QR GENERATOR
+        ================================= -->
+
+        <section
+            class="generator"
+            id="generator"
+        >
+
+            <div class="generator-header">
+
+                <div class="generator-title">
+                    👑 QR Generator
+                </div>
+
+                <button
+                    class="close-btn"
+                    onclick="closeGenerator()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <label class="label">
+                Enter Text or URL
             </label>
 
             <div class="textarea-wrap">
 
                 <textarea
                     id="qrText"
-                    placeholder="Enter text, URL, contact information..."
                     maxlength="5000"
+                    placeholder="Enter text, URL or other information..."
                 ></textarea>
 
                 <div class="counter">
-                    <span id="counter">0</span> / 5000
+                    <span id="counter">0</span>/5000
                 </div>
 
             </div>
 
 
-            <!-- OPTIONS -->
-
             <div class="options">
 
-                <div class="option-box">
+                <div class="option">
 
                     <label class="label">
                         Error Correction
@@ -990,26 +1604,27 @@ footer strong{
                     <select id="errorLevel">
 
                         <option value="L">
-                            Low — 7%
+                            L — Low (7%)
                         </option>
 
                         <option value="M">
-                            Medium — 15%
+                            M — Medium (15%)
                         </option>
 
                         <option value="Q">
-                            Quartile — 25%
+                            Q — Quartile (25%)
                         </option>
 
                         <option value="H" selected>
-                            High — 30%
+                            H — High (30%)
                         </option>
 
                     </select>
 
                 </div>
 
-                <div class="option-box">
+
+                <div class="option">
 
                     <label class="label">
                         QR Capacity
@@ -1018,7 +1633,7 @@ footer strong{
                     <select disabled>
 
                         <option>
-                            Automatic — Version 1–40
+                            Automatic (1–40)
                         </option>
 
                     </select>
@@ -1030,27 +1645,23 @@ footer strong{
 
             <!-- LOGO -->
 
-            <div class="logo-section">
+            <div class="logo-box">
+
+                <label class="label">
+                    Add Logo to QR
+                </label>
 
                 <div class="logo-row">
 
-                    <div class="logo-info">
-
-                        <div class="logo-title">
-                            Add Logo
-                        </div>
-
-                        <div class="logo-description">
-                            Place your logo in the center of QR
-                        </div>
-
+                    <div style="color:#999;font-size:11px;">
+                        PNG, JPG, WEBP
                     </div>
 
                     <label
-                        class="file-label"
+                        class="upload"
                         for="logoInput"
                     >
-                        Upload Logo
+                        ⬆ Upload Logo
                     </label>
 
                     <input
@@ -1063,20 +1674,20 @@ footer strong{
 
 
                 <button
-                    class="remove-logo"
+                    class="remove"
                     id="removeLogo"
                     onclick="removeLogo()"
                 >
-                    Remove Logo
+                    🗑 Remove Logo
                 </button>
 
 
                 <div
-                    class="logo-size-box"
+                    class="logo-size"
                     id="logoSizeBox"
                 >
 
-                    <div class="logo-size-head">
+                    <div class="size-head">
 
                         <span>
                             Logo Size
@@ -1101,51 +1712,51 @@ footer strong{
             </div>
 
 
-            <!-- GENERATE -->
+            <!-- ACTIONS -->
 
-            <button
-                class="generate-btn"
-                onclick="generateQR()"
-            >
-                Generate QR Code
-            </button>
+            <div class="actions">
 
+                <button
+                    class="generate"
+                    onclick="generateQR()"
+                >
+                    ▦ Generate QR
+                </button>
 
-            <!-- ERROR -->
+                <button
+                    class="download"
+                    id="downloadBtn"
+                    onclick="downloadQR()"
+                >
+                    ⇩ Download PNG
+                </button>
+
+            </div>
+
 
             <div
                 class="error"
                 id="error"
             ></div>
 
-        </div>
 
+            <!-- PREVIEW -->
 
-        <!-- RIGHT -->
+            <div class="preview">
 
-        <div class="generator-right">
-
-            <div class="preview-title">
-                QR Preview
-            </div>
-
-            <div class="qr-preview">
+                <div class="preview-title">
+                    QR PREVIEW
+                </div>
 
                 <div id="qrcode">
 
-                    <div class="empty-preview">
+                    <div class="empty">
 
-                        <div class="empty-icon">
+                        <div style="font-size:45px;margin-bottom:10px;">
                             ▦
                         </div>
 
-                        <strong>
-                            Your QR Code
-                        </strong>
-
-                        <span>
-                            Enter content and click Generate
-                        </span>
+                        Enter content and click Generate
 
                     </div>
 
@@ -1153,139 +1764,434 @@ footer strong{
 
             </div>
 
-
-            <button
-                class="download-btn"
-                id="downloadBtn"
-                onclick="downloadQR()"
-            >
-                📥 Download QR Code PNG
-            </button>
-
-        </div>
+        </section>
 
     </div>
 
-</section>
+</main>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-    <strong>myQR</strong>
-    — Professional Offline QR Generator
-
-    <br><br>
-
-    100% Local • No API • No External Service
-
-</footer>
-
-
-<!-- =========================
-     LOCAL QR LIBRARY
-========================= -->
+<!-- =================================
+     QR LIBRARY
+================================= -->
 
 <script src="qrcode.js"></script>
 
 
 <script>
 
-/* =========================
-   GLOBAL VARIABLES
-========================= */
+/* =================================
+   VARIABLES
+================================= */
 
 let currentQR = null;
 let uploadedLogo = null;
 
 
-/* =========================
-   CHARACTER COUNTER
-========================= */
+/* =================================
+   FIRE SOUND
+   100% OFFLINE
+================================= */
+
+let audioContext = null;
+
+function firingSound(){
+
+    try{
+
+        if(!audioContext){
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        if(audioContext.state === "suspended"){
+            audioContext.resume();
+        }
+
+
+        const now =
+            audioContext.currentTime;
+
+
+        /* Main shot */
+
+        const osc =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+
+        osc.type = "sawtooth";
+
+        osc.frequency.setValueAtTime(
+            180,
+            now
+        );
+
+        osc.frequency.exponentialRampToValueAtTime(
+            45,
+            now + .22
+        );
+
+
+        gain.gain.setValueAtTime(
+            .0001,
+            now
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .65,
+            now + .008
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+            .0001,
+            now + .25
+        );
+
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+
+        osc.start(now);
+        osc.stop(now + .26);
+
+
+        /* Crack sound */
+
+        const crack =
+            audioContext.createOscillator();
+
+        const crackGain =
+            audioContext.createGain();
+
+
+        crack.type = "square";
+
+        crack.frequency.setValueAtTime(
+            850,
+            now
+        );
+
+        crack.frequency.exponentialRampToValueAtTime(
+            120,
+            now + .12
+        );
+
+
+        crackGain.gain.setValueAtTime(
+            .0001,
+            now
+        );
+
+        crackGain.gain.exponentialRampToValueAtTime(
+            .25,
+            now + .005
+        );
+
+        crackGain.gain.exponentialRampToValueAtTime(
+            .0001,
+            now + .13
+        );
+
+
+        crack.connect(crackGain);
+
+        crackGain.connect(
+            audioContext.destination
+        );
+
+
+        crack.start(now);
+        crack.stop(now + .14);
+
+
+    }catch(e){
+
+        console.log(
+            "Audio unavailable",
+            e
+        );
+
+    }
+
+}
+
+
+/* =================================
+   FIRE + OPEN
+================================= */
+
+function fireAndOpen(){
+
+    const button =
+        document.getElementById(
+            "createButton"
+        );
+
+    const flash =
+        document.getElementById(
+            "flash"
+        );
+
+
+    /* Sound */
+
+    firingSound();
+
+
+    /* Button */
+
+    button.classList.remove("fire");
+
+    void button.offsetWidth;
+
+    button.classList.add("fire");
+
+
+    /* Flash */
+
+    flash.classList.remove("active");
+
+    void flash.offsetWidth;
+
+    flash.classList.add("active");
+
+
+    /* Open generator */
+
+    setTimeout(
+        function(){
+
+            openGenerator();
+
+        },
+        430
+    );
+
+}
+
+
+/* =================================
+   OPEN GENERATOR
+================================= */
+
+function openGenerator(){
+
+    document
+    .getElementById("welcome")
+    .style.display = "none";
+
+
+    const generator =
+        document.getElementById(
+            "generator"
+        );
+
+
+    generator.classList.add("show");
+
+
+    document
+    .querySelectorAll(".menu-btn")
+    .forEach(btn =>
+        btn.classList.remove("active")
+    );
+
+
+    document
+    .querySelectorAll(".menu-btn")[1]
+    .classList.add("active");
+
+}
+
+
+/* =================================
+   CLOSE GENERATOR
+================================= */
+
+function closeGenerator(){
+
+    document
+    .getElementById("generator")
+    .classList.remove("show");
+
+
+    document
+    .getElementById("welcome")
+    .style.display = "flex";
+
+
+    document
+    .querySelectorAll(".menu-btn")
+    .forEach(btn =>
+        btn.classList.remove("active")
+    );
+
+
+    document
+    .querySelectorAll(".menu-btn")[0]
+    .classList.add("active");
+
+}
+
+
+/* =================================
+   HOME
+================================= */
+
+function showHome(){
+
+    closeGenerator();
+
+}
+
+
+/* =================================
+   SETTINGS
+================================= */
+
+function showSettings(){
+
+    firingSound();
+
+    alert(
+        "QR Luxury Settings\n\n" +
+        "Offline Mode: ON\n" +
+        "QR Capacity: Version 1–40\n" +
+        "Error Correction: L / M / Q / H"
+    );
+
+}
+
+
+/* =================================
+   COUNTER
+================================= */
 
 document
 .getElementById("qrText")
-.addEventListener("input", function(){
+.addEventListener(
+    "input",
+    function(){
 
-    document
-    .getElementById("counter")
-    .textContent = this.value.length;
+        document
+        .getElementById("counter")
+        .textContent =
+            this.value.length;
 
-});
+    }
+);
 
 
-/* =========================
+/* =================================
    LOGO UPLOAD
-========================= */
+================================= */
 
 document
 .getElementById("logoInput")
-.addEventListener("change", function(event){
+.addEventListener(
+    "change",
+    function(event){
 
-    const file = event.target.files[0];
+        const file =
+            event.target.files[0];
 
-    if(!file) return;
+        if(!file) return;
 
-    if(!file.type.startsWith("image/")){
 
-        alert("Please select an image.");
+        if(!file.type.startsWith("image/")){
 
-        this.value = "";
+            alert(
+                "Please select an image."
+            );
 
-        return;
+            this.value = "";
+
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e){
+
+                const img =
+                    new Image();
+
+
+                img.onload =
+                    function(){
+
+                        uploadedLogo =
+                            img;
+
+
+                        document
+                        .getElementById(
+                            "removeLogo"
+                        )
+                        .style.display =
+                            "block";
+
+
+                        document
+                        .getElementById(
+                            "logoSizeBox"
+                        )
+                        .style.display =
+                            "block";
+
+                    };
+
+
+                img.src =
+                    e.target.result;
+
+            };
+
+
+        reader.readAsDataURL(file);
+
     }
-
-    const reader = new FileReader();
-
-    reader.onload = function(e){
-
-        const img = new Image();
-
-        img.onload = function(){
-
-            uploadedLogo = img;
-
-            document
-            .getElementById("removeLogo")
-            .style.display = "block";
-
-            document
-            .getElementById("logoSizeBox")
-            .style.display = "block";
-
-        };
-
-        img.src = e.target.result;
-
-    };
-
-    reader.readAsDataURL(file);
-
-});
+);
 
 
-/* =========================
+/* =================================
    REMOVE LOGO
-========================= */
+================================= */
 
 function removeLogo(){
 
     uploadedLogo = null;
 
+
     document
     .getElementById("logoInput")
     .value = "";
 
+
     document
     .getElementById("removeLogo")
-    .style.display = "none";
+    .style.display =
+        "none";
+
 
     document
     .getElementById("logoSizeBox")
-    .style.display = "none";
+    .style.display =
+        "none";
+
 
     if(
         document
@@ -1301,36 +2207,43 @@ function removeLogo(){
 }
 
 
-/* =========================
+/* =================================
    LOGO SIZE
-========================= */
+================================= */
 
 document
 .getElementById("logoSize")
-.addEventListener("input", function(){
+.addEventListener(
+    "input",
+    function(){
 
-    document
-    .getElementById("logoSizeValue")
-    .textContent = this.value;
-
-    if(
-        uploadedLogo &&
         document
-        .getElementById("qrText")
-        .value
-        .trim()
-    ){
+        .getElementById(
+            "logoSizeValue"
+        )
+        .textContent =
+            this.value;
 
-        generateQR();
+
+        if(
+            uploadedLogo &&
+            document
+            .getElementById("qrText")
+            .value
+            .trim()
+        ){
+
+            generateQR();
+
+        }
 
     }
+);
 
-});
 
-
-/* =========================
+/* =================================
    GENERATE QR
-========================= */
+================================= */
 
 function generateQR(){
 
@@ -1340,18 +2253,22 @@ function generateQR(){
         .value
         .trim();
 
+
     const level =
         document
         .getElementById("errorLevel")
         .value;
 
+
     const qrBox =
         document
         .getElementById("qrcode");
 
+
     const error =
         document
         .getElementById("error");
+
 
     const download =
         document
@@ -1360,9 +2277,11 @@ function generateQR(){
 
     qrBox.innerHTML = "";
 
-    download.style.display = "none";
+    download.style.display =
+        "none";
 
-    error.style.display = "none";
+    error.style.display =
+        "none";
 
 
     if(!text){
@@ -1370,7 +2289,8 @@ function generateQR(){
         error.textContent =
             "Please enter text or URL.";
 
-        error.style.display = "block";
+        error.style.display =
+            "block";
 
         return;
     }
@@ -1379,7 +2299,7 @@ function generateQR(){
     try{
 
         const qr =
-            qrcode(0, level);
+            qrcode(0,level);
 
 
         qr.addData(
@@ -1429,8 +2349,10 @@ function generateQR(){
 
         console.error(e);
 
+
         error.textContent =
             "Text is too long for a single QR code. Please reduce the text.";
+
 
         error.style.display =
             "block";
@@ -1440,9 +2362,9 @@ function generateQR(){
 }
 
 
-/* =========================
-   ADD LOGO TO QR
-========================= */
+/* =================================
+   ADD LOGO
+================================= */
 
 function addLogoToQR(
     qrImage,
@@ -1453,7 +2375,10 @@ function addLogoToQR(
 
 
     const canvas =
-        document.createElement("canvas");
+        document.createElement(
+            "canvas"
+        );
+
 
     const ctx =
         canvas.getContext("2d");
@@ -1463,6 +2388,7 @@ function addLogoToQR(
 
         const width =
             qrImage.naturalWidth;
+
 
         const height =
             qrImage.naturalHeight;
@@ -1479,10 +2405,9 @@ function addLogoToQR(
             height;
 
 
-        /* White background */
-
         ctx.fillStyle =
             "#ffffff";
+
 
         ctx.fillRect(
             0,
@@ -1492,10 +2417,9 @@ function addLogoToQR(
         );
 
 
-        /* Draw QR */
-
         ctx.imageSmoothingEnabled =
             false;
+
 
         ctx.drawImage(
             qrImage,
@@ -1506,12 +2430,12 @@ function addLogoToQR(
         );
 
 
-        /* Logo size */
-
         const percentage =
             Number(
                 document
-                .getElementById("logoSize")
+                .getElementById(
+                    "logoSize"
+                )
                 .value
             ) / 100;
 
@@ -1525,6 +2449,7 @@ function addLogoToQR(
 
         let logoWidth =
             maxLogo;
+
 
         let logoHeight =
             maxLogo;
@@ -1561,6 +2486,7 @@ function addLogoToQR(
         const x =
             (width - logoWidth) / 2;
 
+
         const y =
             (height - logoHeight) / 2;
 
@@ -1568,11 +2494,9 @@ function addLogoToQR(
         const padding =
             Math.max(
                 12,
-                maxLogo * 0.12
+                maxLogo * .12
             );
 
-
-        /* White logo background */
 
         ctx.fillStyle =
             "#ffffff";
@@ -1591,8 +2515,6 @@ function addLogoToQR(
         ctx.fill();
 
 
-        /* Logo */
-
         ctx.imageSmoothingEnabled =
             true;
 
@@ -1606,10 +2528,10 @@ function addLogoToQR(
         );
 
 
-        /* Final image */
-
         const finalImage =
-            document.createElement("img");
+            document.createElement(
+                "img"
+            );
 
 
         finalImage.src =
@@ -1649,8 +2571,7 @@ function addLogoToQR(
 
         draw();
 
-    }
-    else{
+    }else{
 
         qrImage.onload =
             draw;
@@ -1660,9 +2581,9 @@ function addLogoToQR(
 }
 
 
-/* =========================
-   ROUNDED RECTANGLE
-========================= */
+/* =================================
+   ROUND RECT
+================================= */
 
 function roundRect(
     ctx,
@@ -1743,9 +2664,9 @@ function roundRect(
 }
 
 
-/* =========================
-   DOWNLOAD QR
-========================= */
+/* =================================
+   DOWNLOAD
+================================= */
 
 function downloadQR(){
 
@@ -1754,7 +2675,9 @@ function downloadQR(){
 
 
     const canvas =
-        document.createElement("canvas");
+        document.createElement(
+            "canvas"
+        );
 
 
     const ctx =
@@ -1781,13 +2704,15 @@ function downloadQR(){
 
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
 
     link.download =
         uploadedLogo
-        ? "qr-code-with-logo.png"
-        : "qr-code.png";
+        ? "qr-luxury-with-logo.png"
+        : "qr-luxury.png";
 
 
     link.href =
@@ -1796,24 +2721,24 @@ function downloadQR(){
         );
 
 
-    document
-    .body
-    .appendChild(link);
+    document.body.appendChild(
+        link
+    );
 
 
     link.click();
 
 
-    document
-    .body
-    .removeChild(link);
+    document.body.removeChild(
+        link
+    );
 
 }
 
 
-/* =========================
+/* =================================
    CTRL + ENTER
-========================= */
+================================= */
 
 document
 .getElementById("qrText")
