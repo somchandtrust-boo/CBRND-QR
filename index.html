@@ -1793,24 +1793,29 @@ let uploadedLogo = null;
    100% OFFLINE
 ================================= */
 
-<audio id="clickSound" preload="auto">
-    <source src="click-sound.mp3" type="audio/mpeg">
-</audio>
+let audioContext = null;
 
-<script>
 function firingSound(){
 
-    const sound = document.getElementById("clickSound");
+    try{
 
-    sound.pause();
-    sound.currentTime = 0;
-    sound.volume = 1.0;
+        if(!audioContext){
 
-    sound.play().catch(error => {
-        console.log("Sound play error:", error);
-    });
-}
-</script>
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+        if(audioContext.state === "suspended"){
+            audioContext.resume();
+        }
+
+
+        const now =
+            audioContext.currentTime;
 
 
         /* Main shot */
