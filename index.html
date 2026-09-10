@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>QR Luxury - Offline QR Generator</title>
+<title>QR Luxury — Offline QR Generator</title>
 
 <style>
 *{
@@ -13,1374 +13,916 @@
     padding:0;
 }
 
-:root{
-    --gold:#d9a441;
-    --gold2:#ffd76a;
-    --gold3:#fff0ad;
-    --black:#020304;
-    --dark:#070b10;
-    --panel:#0b1118;
-    --text:#fff8df;
-}
-
 html{
     scroll-behavior:smooth;
 }
 
 body{
     min-height:100vh;
-    overflow-x:hidden;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    color:white;
-
+    font-family:Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(175,115,20,.14),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 85% 10%,
-            rgba(255,183,0,.10),
-            transparent 25%
-        ),
-        linear-gradient(
-            135deg,
-            #020304,
-            #070b10 50%,
-            #010203
-        );
+        radial-gradient(circle at 20% 10%,rgba(255,190,40,.12),transparent 30%),
+        radial-gradient(circle at 80% 20%,rgba(255,120,0,.10),transparent 30%),
+        linear-gradient(135deg,#080808,#111,#050505);
+    color:#fff;
 }
 
-/* =================================
-   GOLD LIGHT EFFECT
-================================= */
-
-body::before{
-    content:"";
-
-    position:fixed;
-    inset:-30%;
-
-    pointer-events:none;
-
-    background:
-        repeating-linear-gradient(
-            120deg,
-            transparent 0px,
-            transparent 130px,
-            rgba(255,193,7,.025) 132px,
-            transparent 136px
-        );
-
-    transform:rotate(-5deg);
-
-    z-index:-1;
-}
-
-/* =================================
+/* =========================
    NAVBAR
-================================= */
+========================= */
 
 .navbar{
+    height:74px;
+    width:100%;
     position:fixed;
-
     top:0;
     left:0;
-    right:0;
-
-    height:74px;
-
     z-index:1000;
 
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    padding:10px 25px;
+    padding:0 28px;
 
-    background:
-        rgba(2,3,4,.78);
+    background:rgba(8,8,8,.88);
+    backdrop-filter:blur(18px);
 
-    backdrop-filter:blur(15px);
-
-    border-bottom:
-        1px solid rgba(218,164,65,.25);
-
-    box-shadow:
-        0 10px 40px rgba(0,0,0,.5);
+    border-bottom:1px solid rgba(255,190,60,.25);
+    box-shadow:0 8px 35px rgba(0,0,0,.5);
 }
 
 .brand{
     display:flex;
     align-items:center;
-
     gap:12px;
 }
 
-.brand img{
-    width:48px;
-    height:48px;
+.brand-logo{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    object-fit:cover;
 
-    object-fit:contain;
-
-    filter:
-        drop-shadow(0 0 10px rgba(255,194,62,.45));
+    border:1px solid rgba(255,210,90,.6);
+    box-shadow:
+        0 0 15px rgba(255,190,40,.3),
+        inset 0 0 12px rgba(255,255,255,.1);
 }
 
 .brand-name{
-    font-size:20px;
-
-    font-weight:900;
-
+    font-size:18px;
+    font-weight:800;
     letter-spacing:2px;
 
-    color:var(--gold2);
+    background:linear-gradient(90deg,#fff,#ffd35c,#fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
-.status{
+.offline-status{
     display:flex;
     align-items:center;
+    gap:7px;
 
-    gap:8px;
-
-    padding:9px 15px;
-
-    border-radius:30px;
-
-    border:1px solid rgba(255,210,90,.35);
-
-    background:
-        rgba(255,255,255,.04);
-
-    color:#ddd;
-
+    color:#d9d9d9;
     font-size:12px;
 }
 
 .status-dot{
-    width:9px;
-    height:9px;
-
+    width:8px;
+    height:8px;
     border-radius:50%;
-
-    background:#00e676;
-
-    box-shadow:
-        0 0 12px #00e676;
+    background:#53ff83;
+    box-shadow:0 0 10px #53ff83;
 }
 
-/* =================================
+/* =========================
    MAIN
-================================= */
+========================= */
 
 .main{
+    padding-top:74px;
     min-height:100vh;
-
-    padding:
-        105px 25px 50px;
-
-    max-width:1450px;
-
-    margin:auto;
 }
-
-/* =================================
-   DASHBOARD GRID
-================================= */
 
 .dashboard{
+    width:min(1400px,94%);
+    margin:auto;
+
     display:grid;
+    grid-template-columns:240px 1fr;
+    gap:22px;
 
-    grid-template-columns:
-        240px
-        1fr
-        1.45fr;
-
-    gap:20px;
-
-    min-height:calc(100vh - 155px);
+    padding:28px 0 40px;
 }
 
-/* =================================
+/* =========================
    SIDEBAR
-================================= */
+========================= */
 
 .sidebar{
-    position:relative;
-
-    border-radius:25px;
-
-    padding:20px 15px;
+    min-height:calc(100vh - 130px);
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(17,18,18,.96),
-            rgba(3,5,7,.96)
-        );
+        linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
 
-    border:
-        1px solid rgba(218,164,65,.45);
+    border:1px solid rgba(255,190,60,.2);
+    border-radius:24px;
+
+    padding:20px;
 
     box-shadow:
-        0 25px 60px rgba(0,0,0,.55),
-        inset 0 0 30px rgba(255,185,40,.025);
-
-    overflow:hidden;
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.06);
 }
 
-.sidebar::before{
-    content:"";
-
-    position:absolute;
-
-    top:0;
-    left:0;
-    right:0;
-
-    height:2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--gold2),
-            transparent
-        );
-
-    box-shadow:
-        0 0 20px var(--gold);
-}
-
-.logo-area{
-    text-align:center;
-
-    padding:10px 5px 25px;
-}
-
-.logo-area img{
-    width:175px;
-    max-width:100%;
-
-    object-fit:contain;
-
-    filter:
-        drop-shadow(
-            0 0 18px
-            rgba(255,195,65,.35)
-        );
+.sidebar-title{
+    font-size:12px;
+    color:#888;
+    letter-spacing:2px;
+    margin:8px 10px 15px;
 }
 
 .menu{
     display:flex;
-
     flex-direction:column;
-
-    gap:12px;
+    gap:10px;
 }
 
-.menu-btn{
-    position:relative;
+.menu button{
+    width:100%;
+    border:1px solid transparent;
+    background:rgba(255,255,255,.025);
+
+    color:#aaa;
+    text-align:left;
+
+    padding:14px 15px;
+    border-radius:14px;
+
+    cursor:pointer;
+    transition:.25s;
+
+    font-size:14px;
+}
+
+.menu button:hover{
+    color:#fff;
+    border-color:rgba(255,195,65,.25);
+    background:rgba(255,195,65,.07);
+    transform:translateX(3px);
+}
+
+.menu button.active{
+    color:#ffd45b;
+    border-color:rgba(255,195,65,.35);
+    background:
+        linear-gradient(90deg,rgba(255,190,50,.15),rgba(255,190,50,.03));
+
+    box-shadow:
+        inset 3px 0 #ffd45b,
+        0 8px 25px rgba(0,0,0,.2);
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content{
+    min-width:0;
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome{
+    min-height:calc(100vh - 130px);
 
     display:flex;
     align-items:center;
-
-    gap:14px;
-
-    width:100%;
-
-    padding:16px 15px;
-
-    border:none;
-
-    border-radius:16px;
-
-    color:#aaa;
-
-    background:
-        transparent;
-
-    font-size:15px;
-
-    text-align:left;
-
-    cursor:pointer;
-
-    transition:
-        transform .25s,
-        color .25s,
-        background .25s,
-        box-shadow .25s;
-}
-
-.menu-btn span:first-child{
-    font-size:22px;
-
-    width:30px;
-
-    text-align:center;
-}
-
-.menu-btn:hover,
-.menu-btn.active{
-    color:white;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(218,164,65,.24),
-            rgba(218,164,65,.04)
-        );
-
-    box-shadow:
-        inset 0 0 20px rgba(218,164,65,.08),
-        0 0 15px rgba(218,164,65,.08);
-}
-
-.menu-btn.active::before{
-    content:"";
-
-    position:absolute;
-
-    left:-1px;
-
-    top:12px;
-    bottom:12px;
-
-    width:3px;
-
-    border-radius:5px;
-
-    background:var(--gold2);
-
-    box-shadow:
-        0 0 12px var(--gold2);
-}
-
-.sidebar-bottom{
-    position:absolute;
-
-    left:15px;
-    right:15px;
-    bottom:18px;
-
-    text-align:center;
-
-    color:#9d7d38;
-
-    font-size:10px;
-
-    letter-spacing:.5px;
-}
-
-/* =================================
-   WELCOME PANEL
-================================= */
-
-.welcome{
-    position:relative;
-
-    display:flex;
-    flex-direction:column;
     justify-content:center;
 
-    padding:45px;
+    text-align:center;
 
-    min-height:650px;
-
-    border-radius:25px;
-
-    overflow:hidden;
+    border-radius:28px;
 
     background:
-        radial-gradient(
-            circle at 60% 50%,
-            rgba(218,164,65,.12),
-            transparent 32%
-        ),
-        linear-gradient(
-            145deg,
-            rgba(13,17,22,.98),
-            rgba(3,5,7,.96)
-        );
+        radial-gradient(circle at center,rgba(255,190,50,.12),transparent 40%),
+        linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
 
-    border:
-        1px solid rgba(218,164,65,.4);
+    border:1px solid rgba(255,195,70,.22);
 
     box-shadow:
-        0 25px 60px rgba(0,0,0,.55),
-        inset 0 0 50px rgba(255,194,55,.025);
+        0 25px 80px rgba(0,0,0,.5),
+        inset 0 1px rgba(255,255,255,.06);
+
+    position:relative;
+    overflow:hidden;
 }
 
 .welcome::before{
     content:"";
-
     position:absolute;
-
     width:500px;
     height:500px;
 
-    right:-250px;
-    top:-200px;
-
     border-radius:50%;
 
-    border:
-        1px solid rgba(255,205,75,.16);
+    border:1px solid rgba(255,200,70,.08);
 
     box-shadow:
-        0 0 100px rgba(255,190,40,.05);
+        0 0 80px rgba(255,180,40,.08),
+        inset 0 0 80px rgba(255,180,40,.04);
+}
+
+.welcome-content{
+    position:relative;
+    z-index:2;
 }
 
 .welcome-small{
-    color:var(--gold2);
-
-    font-family:Georgia,serif;
-
-    font-size:25px;
-
-    margin-bottom:5px;
+    color:#d7aa3b;
+    font-size:12px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:18px;
 }
 
 .welcome h1{
-    font-family:Georgia,serif;
-
-    font-size:
-        clamp(55px,6vw,90px);
-
+    font-size:clamp(38px,6vw,78px);
     line-height:1;
 
-    margin-bottom:25px;
+    margin-bottom:20px;
 
-    background:
-        linear-gradient(
-            180deg,
-            #fff6ca,
-            #ffd96b 45%,
-            #b57919
-        );
+    background:linear-gradient(
+        90deg,
+        #fff,
+        #ffd45b,
+        #fff,
+        #d99b21
+    );
+
+    background-size:300% auto;
 
     -webkit-background-clip:text;
-    background-clip:text;
+    -webkit-text-fill-color:transparent;
 
-    color:transparent;
+    animation:goldMove 5s linear infinite;
+}
 
-    text-shadow:
-        0 0 25px rgba(255,191,50,.15);
+@keyframes goldMove{
+    0%{background-position:0% center}
+    100%{background-position:300% center}
 }
 
 .welcome p{
-    max-width:520px;
+    max-width:620px;
+    margin:auto;
 
-    color:#aaa;
-
-    font-size:16px;
-
-    line-height:1.8;
-
-    margin-bottom:45px;
+    color:#999;
+    line-height:1.7;
+    font-size:15px;
 }
 
-/* =================================
+/* =========================
    3D CREATE BUTTON
-================================= */
+========================= */
 
 .create-wrap{
-    position:relative;
-
-    width:100%;
-    max-width:500px;
-
-    margin:auto auto 20px;
+    margin-top:45px;
+    perspective:1000px;
 }
 
 .create-button{
     position:relative;
 
-    width:100%;
+    width:280px;
+    height:82px;
 
-    min-height:120px;
+    border:none;
+    border-radius:22px;
 
-    padding:25px 35px;
+    cursor:pointer;
 
-    border-radius:24px;
+    color:#fff;
 
-    border:
-        2px solid #d9a441;
-
-    color:#fff2bd;
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:1px;
 
     background:
         linear-gradient(
             145deg,
-            #201608,
-            #080b0e 45%,
-            #181006
+            #fff1a6 0%,
+            #ffd34f 18%,
+            #c78308 48%,
+            #ffd45a 72%,
+            #8f5900 100%
         );
 
-    font-family:Georgia,serif;
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    letter-spacing:.5px;
-
-    cursor:pointer;
-
-    transform:
-        perspective(700px)
-        rotateX(5deg);
-
     box-shadow:
-        0 8px 0 #6f4910,
-        0 15px 30px rgba(0,0,0,.8),
-        inset 0 0 20px rgba(255,190,50,.13),
-        0 0 25px rgba(255,180,20,.20);
+        0 10px 0 #754700,
+        0 18px 30px rgba(0,0,0,.55),
+        0 0 35px rgba(255,185,30,.2),
+        inset 0 2px 2px rgba(255,255,255,.8),
+        inset 0 -5px 8px rgba(80,40,0,.35);
+
+    transform:translateY(0) rotateX(0deg);
 
     transition:
-        transform .15s,
-        box-shadow .15s;
+        transform .12s,
+        box-shadow .12s;
 }
 
 .create-button::before{
     content:"";
-
     position:absolute;
 
-    inset:5px;
+    inset:7px;
 
-    border-radius:18px;
+    border-radius:16px;
 
-    border:
-        1px solid rgba(255,224,130,.35);
+    border:1px solid rgba(255,255,255,.5);
 
     pointer-events:none;
 }
 
+.create-button::after{
+    content:"";
+    position:absolute;
+
+    width:65%;
+    height:30%;
+
+    top:8px;
+    left:18%;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.28);
+
+    filter:blur(8px);
+
+    pointer-events:none;
+}
+
+.create-button span{
+    position:relative;
+    z-index:3;
+    color:#241500;
+}
+
 .create-button:hover{
-    transform:
-        perspective(700px)
-        rotateX(2deg)
-        translateY(-3px);
+    transform:translateY(-4px) rotateX(7deg);
 
     box-shadow:
-        0 11px 0 #6f4910,
-        0 22px 45px rgba(0,0,0,.85),
-        inset 0 0 30px rgba(255,190,50,.18),
-        0 0 40px rgba(255,180,20,.30);
+        0 14px 0 #754700,
+        0 25px 45px rgba(0,0,0,.6),
+        0 0 55px rgba(255,190,40,.35),
+        inset 0 2px 2px rgba(255,255,255,.9);
 }
 
 .create-button:active,
 .create-button.fire{
-    transform:
-        perspective(700px)
-        rotateX(0deg)
-        translateY(7px);
+    transform:translateY(8px) scale(.97);
 
     box-shadow:
-        0 2px 0 #6f4910,
-        0 8px 15px rgba(0,0,0,.8),
-        0 0 60px rgba(255,170,0,.8);
+        0 2px 0 #754700,
+        0 8px 15px rgba(0,0,0,.5),
+        inset 0 4px 8px rgba(60,30,0,.35);
 }
 
-.button-content{
-    position:relative;
-    z-index:2;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    gap:20px;
-}
-
-.button-icon{
-    font-size:32px;
-
-    filter:
-        drop-shadow(
-            0 0 8px
-            rgba(255,210,80,.7)
-        );
-}
-
-.button-arrow{
-    font-size:32px;
-
-    transition:.25s;
-}
-
-.create-button:hover .button-arrow{
-    transform:translateX(8px);
-}
-
-/* =================================
+/* =========================
    SPARKS
-================================= */
-
-.sparks{
-    position:absolute;
-
-    inset:0;
-
-    pointer-events:none;
-
-    overflow:hidden;
-
-    opacity:0;
-
-    z-index:5;
-}
-
-.create-button.fire .sparks{
-    opacity:1;
-}
+========================= */
 
 .spark{
     position:absolute;
 
-    width:4px;
-    height:4px;
+    width:5px;
+    height:5px;
 
     border-radius:50%;
 
-    background:#fff0a5;
+    background:#ffd95c;
 
-    box-shadow:
-        0 0 8px #ffd45c,
-        0 0 18px #ff9d00;
-
-    animation:
-        sparkFly .7s ease-out forwards;
-}
-
-.spark:nth-child(1){
-    left:50%;
-    top:50%;
-    --x:-160px;
-    --y:-90px;
-}
-
-.spark:nth-child(2){
-    left:50%;
-    top:50%;
-    --x:170px;
-    --y:-100px;
-}
-
-.spark:nth-child(3){
-    left:50%;
-    top:50%;
-    --x:-180px;
-    --y:70px;
-}
-
-.spark:nth-child(4){
-    left:50%;
-    top:50%;
-    --x:180px;
-    --y:80px;
-}
-
-.spark:nth-child(5){
-    left:50%;
-    top:50%;
-    --x:-70px;
-    --y:-130px;
-}
-
-.spark:nth-child(6){
-    left:50%;
-    top:50%;
-    --x:80px;
-    --y:130px;
-}
-
-.spark:nth-child(7){
-    left:50%;
-    top:50%;
-    --x:-230px;
-    --y:10px;
-}
-
-.spark:nth-child(8){
-    left:50%;
-    top:50%;
-    --x:230px;
-    --y:-10px;
-}
-
-@keyframes sparkFly{
-    from{
-        transform:translate(-50%,-50%) scale(1);
-        opacity:1;
-    }
-
-    to{
-        transform:
-            translate(
-                calc(-50% + var(--x)),
-                calc(-50% + var(--y))
-            )
-            scale(.1);
-
-        opacity:0;
-    }
-}
-
-/* =================================
-   FIRING FLASH
-================================= */
-
-.flash{
-    position:fixed;
-
-    inset:0;
+    box-shadow:0 0 12px #ffbe22;
 
     pointer-events:none;
 
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(255,220,110,.45),
-            transparent 40%
-        );
-
     opacity:0;
-
-    z-index:9999;
 }
 
-.flash.active{
-    animation:
-        flashFire .45s ease-out;
+.fire .spark{
+    animation:sparkFly .65s ease-out forwards;
 }
 
-@keyframes flashFire{
+.spark:nth-child(1){left:10%;top:50%}
+.spark:nth-child(2){left:25%;top:15%;animation-delay:.04s}
+.spark:nth-child(3){left:45%;top:5%;animation-delay:.08s}
+.spark:nth-child(4){right:20%;top:12%;animation-delay:.12s}
+.spark:nth-child(5){right:8%;top:50%;animation-delay:.16s}
+.spark:nth-child(6){right:25%;bottom:10%;animation-delay:.20s}
+.spark:nth-child(7){left:20%;bottom:12%;animation-delay:.24s}
+
+@keyframes sparkFly{
     0%{
-        opacity:0;
-    }
-
-    15%{
         opacity:1;
+        transform:translate(0,0) scale(1);
     }
 
     100%{
         opacity:0;
+        transform:
+            translate(
+                calc((var(--x,1))*30px),
+                calc((var(--y,1))*-70px)
+            )
+            scale(.1);
     }
 }
 
-/* =================================
+/* =========================
+   FLASH
+========================= */
+
+.flash{
+    position:fixed;
+    inset:0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,245,170,.9),
+            rgba(255,190,40,.25),
+            transparent 65%
+        );
+
+    opacity:0;
+    pointer-events:none;
+
+    z-index:2000;
+
+    transition:opacity .12s;
+}
+
+.flash.active{
+    opacity:1;
+}
+
+/* =========================
    GENERATOR
-================================= */
+========================= */
 
 .generator{
     display:none;
-
-    min-height:650px;
-
-    padding:25px;
-
-    border-radius:25px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(11,17,24,.98),
-            rgba(2,5,8,.98)
-        );
-
-    border:
-        1px solid rgba(218,164,65,.55);
-
-    box-shadow:
-        0 25px 60px rgba(0,0,0,.7),
-        inset 0 0 30px rgba(255,180,30,.03);
-
-    animation:
-        generatorOpen .6s ease forwards;
 }
 
 .generator.show{
     display:block;
+    animation:generatorIn .45s ease;
 }
 
-@keyframes generatorOpen{
+@keyframes generatorIn{
     from{
         opacity:0;
-        transform:
-            perspective(1000px)
-            rotateY(-12deg)
-            translateX(40px);
+        transform:translateY(25px) scale(.98);
     }
 
     to{
         opacity:1;
-        transform:
-            perspective(1000px)
-            rotateY(0)
-            translateX(0);
+        transform:none;
     }
 }
 
-.generator-header{
-    display:flex;
+.panel{
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
 
+    border:1px solid rgba(255,195,65,.22);
+
+    border-radius:26px;
+
+    padding:25px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.5),
+        inset 0 1px rgba(255,255,255,.06);
+}
+
+.panel-head{
+    display:flex;
     align-items:center;
     justify-content:space-between;
 
-    margin-bottom:20px;
+    gap:15px;
+
+    margin-bottom:24px;
 }
 
-.generator-title{
-    font-family:Georgia,serif;
+.panel-head h2{
+    font-size:25px;
+}
 
-    font-size:27px;
-
-    color:#ffe28a;
+.panel-head p{
+    color:#888;
+    font-size:13px;
+    margin-top:6px;
 }
 
 .close-btn{
-    width:38px;
-    height:38px;
+    border:1px solid rgba(255,195,65,.2);
+    background:rgba(255,255,255,.03);
 
-    border-radius:50%;
+    color:#bbb;
 
-    border:
-        1px solid rgba(255,205,80,.4);
+    width:42px;
+    height:42px;
 
-    background:#0c1219;
-
-    color:#ffd76a;
-
-    font-size:22px;
+    border-radius:12px;
 
     cursor:pointer;
-}
 
-/* =================================
-   FORM
-================================= */
-
-.label{
-    display:block;
-
-    margin:
-        13px 0 7px;
-
-    color:#f4d47c;
-
-    font-size:13px;
-
-    font-weight:bold;
-}
-
-textarea{
-    width:100%;
-
-    min-height:130px;
-
-    resize:vertical;
-
-    padding:15px;
-
-    border-radius:14px;
-
-    border:
-        1px solid #39434f;
-
-    outline:none;
-
-    background:#080e15;
-
-    color:white;
-
-    font-family:Arial,sans-serif;
-
-    font-size:14px;
-
-    line-height:1.5;
-
-    box-shadow:
-        inset 0 0 15px rgba(0,0,0,.5);
-}
-
-textarea:focus{
-    border-color:#d9a441;
-
-    box-shadow:
-        0 0 15px rgba(218,164,65,.13),
-        inset 0 0 15px rgba(0,0,0,.5);
-}
-
-.textarea-wrap{
-    position:relative;
-}
-
-.counter{
-    position:absolute;
-
-    right:12px;
-    bottom:9px;
-
-    color:#777;
-
-    font-size:10px;
-}
-
-.options{
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:12px;
-}
-
-.option{
-    padding:12px;
-
-    border-radius:14px;
-
-    background:#080e15;
-
-    border:
-        1px solid #303a45;
-}
-
-select{
-    width:100%;
-
-    padding:12px;
-
-    border-radius:10px;
-
-    border:
-        1px solid #37414c;
-
-    background:#0b121a;
-
-    color:white;
-
-    outline:none;
-
-    cursor:pointer;
-}
-
-.logo-box{
-    padding:14px;
-
-    margin-top:10px;
-
-    border-radius:14px;
-
-    border:
-        1px solid #303a45;
-
-    background:#080e15;
-}
-
-.logo-row{
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:10px;
-}
-
-.upload{
-    display:inline-block;
-
-    padding:10px 14px;
-
-    border-radius:10px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #2b2110,
-            #0c1015
-        );
-
-    border:
-        1px solid #c59635;
-
-    color:#ffd96b;
-
-    font-size:12px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-}
-
-#logoInput{
-    display:none;
-}
-
-.remove{
-    display:none;
-
-    margin-top:10px;
-
-    width:100%;
-
-    padding:8px;
-
-    border:none;
-
-    border-radius:9px;
-
-    background:#381217;
-
-    color:#ff7474;
-
-    cursor:pointer;
-}
-
-.logo-size{
-    display:none;
-
-    margin-top:14px;
-}
-
-.size-head{
-    display:flex;
-
-    justify-content:space-between;
-
-    color:#aaa;
-
-    font-size:11px;
-
-    margin-bottom:5px;
-}
-
-input[type="range"]{
-    width:100%;
-
-    accent-color:#e2ae43;
-
-    cursor:pointer;
-}
-
-/* =================================
-   GENERATE / DOWNLOAD
-================================= */
-
-.actions{
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:10px;
-
-    margin-top:15px;
-}
-
-.generate{
-    padding:14px;
-
-    border-radius:13px;
-
-    border:
-        1px solid #f0bd4e;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffd86d,
-            #a96d10
-        );
-
-    color:#090b0d;
-
-    font-size:14px;
-
-    font-weight:900;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 7px 20px rgba(218,164,65,.22);
+    font-size:20px;
 
     transition:.2s;
 }
 
-.generate:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 10px 25px rgba(218,164,65,.35);
+.close-btn:hover{
+    color:#ffd45b;
+    border-color:#ffd45b;
 }
 
-.download{
-    display:none;
+/* =========================
+   GENERATOR GRID
+========================= */
 
-    padding:14px;
-
-    border-radius:13px;
-
-    border:
-        1px solid #d9a441;
-
-    background:#0b1118;
-
-    color:#ffd76a;
-
-    font-size:14px;
-
-    font-weight:bold;
-
-    cursor:pointer;
+.generator-grid{
+    display:grid;
+    grid-template-columns:1fr 420px;
+    gap:22px;
 }
 
-/* =================================
-   QR PREVIEW
-================================= */
+/* =========================
+   INPUT
+========================= */
 
-.preview{
-    margin-top:20px;
+.input-card,
+.preview-card{
+    background:rgba(0,0,0,.22);
 
-    min-height:250px;
+    border:1px solid rgba(255,255,255,.07);
 
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-    justify-content:center;
+    border-radius:20px;
 
     padding:20px;
+}
 
-    border-radius:16px;
+.field{
+    margin-bottom:20px;
+}
+
+.field label{
+    display:block;
+
+    font-size:12px;
+    color:#aaa;
+
+    margin-bottom:9px;
+
+    letter-spacing:.5px;
+}
+
+textarea{
+    width:100%;
+    min-height:180px;
+
+    resize:vertical;
+
+    border:1px solid rgba(255,195,65,.18);
+
+    background:#080808;
+
+    color:#fff;
+
+    border-radius:14px;
+
+    padding:15px;
+
+    outline:none;
+
+    font-size:14px;
+    line-height:1.5;
+
+    transition:.2s;
+}
+
+textarea:focus{
+    border-color:rgba(255,195,65,.65);
+    box-shadow:0 0 0 3px rgba(255,195,65,.07);
+}
+
+.counter{
+    text-align:right;
+    margin-top:6px;
+
+    color:#666;
+    font-size:11px;
+}
+
+select,
+input[type="file"]{
+    width:100%;
+
+    background:#090909;
+
+    color:#fff;
+
+    border:1px solid rgba(255,195,65,.18);
+
+    border-radius:12px;
+
+    padding:12px;
+
+    outline:none;
+}
+
+select:focus{
+    border-color:#dca82e;
+}
+
+.capacity{
+    opacity:.55;
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.remove-logo{
+    display:none;
+
+    border:1px solid rgba(255,80,80,.25);
+
+    background:rgba(255,60,60,.08);
+
+    color:#ff8888;
+
+    border-radius:10px;
+
+    padding:10px 13px;
+
+    cursor:pointer;
+
+    white-space:nowrap;
+}
+
+.logo-size-box{
+    display:none;
+    margin-top:13px;
+}
+
+.range-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+input[type="range"]{
+    width:100%;
+    accent-color:#e0ad32;
+}
+
+.logo-value{
+    min-width:45px;
+    text-align:right;
+    color:#ffd45b;
+    font-size:13px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.action-btn{
+    width:100%;
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:15px;
 
     background:
-        radial-gradient(
-            circle,
-            #151c24,
-            #070b10
+        linear-gradient(
+            135deg,
+            #ffe27b,
+            #bd7b08
         );
 
-    border:
-        1px solid rgba(218,164,65,.28);
+    color:#1c1100;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.6);
+
+    transition:.2s;
+}
+
+.action-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 12px 25px rgba(0,0,0,.45),
+        0 0 25px rgba(255,190,40,.15);
+}
+
+.download-btn{
+    display:none;
+
+    margin-top:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #ddd
+        );
+
+    color:#111;
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
+.preview-card{
+    display:flex;
+    flex-direction:column;
 }
 
 .preview-title{
-    color:#ffd76a;
-
+    color:#aaa;
     font-size:12px;
-
     margin-bottom:15px;
+    letter-spacing:1px;
 }
 
-#qrcode{
-    display:flex;
+.qr-area{
+    min-height:380px;
 
+    display:flex;
     align-items:center;
     justify-content:center;
 
+    border-radius:18px;
+
+    background:#fff;
+
+    padding:20px;
+
+    overflow:hidden;
+}
+
+#qrcode{
     width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 #qrcode img{
-    max-width:210px;
-
+    max-width:100%;
     height:auto;
 
-    background:white;
-
     image-rendering:pixelated;
-}
-
-.empty{
-    text-align:center;
-
-    color:#666;
-
-    font-size:12px;
 }
 
 .error{
     display:none;
 
-    margin-top:10px;
+    margin-top:12px;
 
-    padding:10px;
+    padding:12px;
 
     border-radius:10px;
 
-    background:#351217;
+    background:rgba(255,60,60,.08);
 
-    color:#ff7777;
+    border:1px solid rgba(255,60,60,.2);
+
+    color:#ff8585;
 
     font-size:12px;
 }
 
-/* =================================
-   FIRE MESSAGE
-================================= */
+/* =========================
+   FOOTER
+========================= */
 
-.fire-message{
+.footer{
     text-align:center;
 
-    color:#d9a441;
+    padding:10px 20px 35px;
+
+    color:#555;
 
     font-size:11px;
 
-    margin-top:12px;
-
-    opacity:.8;
+    letter-spacing:.5px;
 }
 
-/* =================================
+/* =========================
    MOBILE
-================================= */
+========================= */
 
-@media(max-width:1100px){
-
-    .dashboard{
-        grid-template-columns:
-            210px
-            1fr;
-    }
-
-    .generator{
-        grid-column:1 / -1;
-    }
-}
-
-@media(max-width:750px){
-
-    .navbar{
-        padding:8px 14px;
-    }
-
-    .brand-name{
-        font-size:16px;
-    }
-
-    .status{
-        padding:8px 10px;
-    }
-
-    .main{
-        padding:
-            90px 12px 25px;
-    }
+@media(max-width:900px){
 
     .dashboard{
-        display:flex;
-
-        flex-direction:column;
+        grid-template-columns:1fr;
     }
 
     .sidebar{
         min-height:auto;
-
-        padding:10px;
-    }
-
-    .logo-area{
-        padding:5px 5px 12px;
-    }
-
-    .logo-area img{
-        width:130px;
     }
 
     .menu{
         flex-direction:row;
-        justify-content:center;
+        overflow-x:auto;
     }
 
-    .menu-btn{
-        width:auto;
-
-        padding:11px;
-
-        justify-content:center;
+    .menu button{
+        min-width:130px;
     }
 
-    .menu-btn span:last-child{
-        display:none;
-    }
-
-    .sidebar-bottom{
-        display:none;
+    .generator-grid{
+        grid-template-columns:1fr;
     }
 
     .welcome{
-        min-height:530px;
-
-        padding:28px 20px;
-
-        text-align:center;
-    }
-
-    .welcome-small{
-        font-size:20px;
-    }
-
-    .welcome h1{
-        font-size:55px;
-    }
-
-    .welcome p{
-        font-size:14px;
-
-        margin-bottom:30px;
-    }
-
-    .create-button{
-        min-height:95px;
-
-        font-size:18px;
-    }
-
-    .generator{
-        min-height:auto;
-
-        padding:18px;
-    }
-
-    .options,
-    .actions{
-        grid-template-columns:1fr;
+        min-height:650px;
     }
 }
 
-@media(max-width:420px){
+@media(max-width:600px){
 
-    .status{
+    .navbar{
+        padding:0 15px;
+    }
+
+    .offline-status{
         display:none;
     }
 
+    .brand-name{
+        font-size:15px;
+    }
+
+    .dashboard{
+        width:94%;
+        padding-top:18px;
+    }
+
+    .welcome{
+        min-height:600px;
+        padding:20px;
+    }
+
     .welcome h1{
-        font-size:45px;
+        font-size:43px;
     }
 
-    .button-content{
-        gap:10px;
+    .welcome p{
+        font-size:13px;
     }
 
-    .button-icon{
-        font-size:25px;
+    .create-button{
+        width:245px;
+        height:75px;
     }
 
-    .button-arrow{
-        font-size:24px;
+    .panel{
+        padding:15px;
+    }
+
+    .generator-grid{
+        gap:15px;
+    }
+
+    .qr-area{
+        min-height:300px;
     }
 }
 </style>
@@ -1388,17 +930,29 @@ input[type="range"]{
 
 <body>
 
-<div class="flash" id="flash"></div>
+<!-- =========================
+     AUDIO
+========================= -->
 
-<!-- =================================
+<audio id="clickSound" preload="auto">
+    <source src="click-sound.mp3" type="audio/mpeg">
+</audio>
+
+
+<!-- =========================
      NAVBAR
-================================= -->
+========================= -->
 
-<nav class="navbar">
+<header class="navbar">
 
     <div class="brand">
 
-        <img src="logo.png" alt="QR Luxury">
+        <img
+            src="logo.png"
+            class="brand-logo"
+            alt="QR Luxury"
+            onerror="this.style.display='none'"
+        >
 
         <div class="brand-name">
             QR LUXURY
@@ -1406,217 +960,200 @@ input[type="range"]{
 
     </div>
 
-    <div class="status">
+    <div class="offline-status">
+
         <span class="status-dot"></span>
-        Offline Mode
+
+        100% OFFLINE
+
     </div>
 
-</nav>
+</header>
 
 
-<!-- =================================
-     MAIN
-================================= -->
+<div class="main">
 
-<main class="main">
+<div class="dashboard">
 
-    <div class="dashboard">
+<!-- =========================
+     SIDEBAR
+========================= -->
 
+<aside class="sidebar">
 
-        <!-- =================================
-             SIDEBAR
-        ================================= -->
+    <div class="sidebar-title">
+        DASHBOARD
+    </div>
 
-        <aside class="sidebar">
+    <div class="menu">
 
-            <div class="logo-area">
-
-                <img
-                    src="logo.png"
-                    alt="QR Luxury Logo"
-                >
-
-            </div>
-
-
-            <div class="menu">
-
-                <button
-                    class="menu-btn active"
-                    onclick="showHome()"
-                >
-                    <span>⌂</span>
-                    <span>Home</span>
-                </button>
-
-                <button
-                    class="menu-btn"
-                    onclick="openGenerator()"
-                >
-                    <span>▦</span>
-                    <span>QR Generator</span>
-                </button>
-
-                <button
-                    class="menu-btn"
-                    onclick="showSettings()"
-                >
-                    <span>⚙</span>
-                    <span>Settings</span>
-                </button>
-
-            </div>
-
-
-            <div class="sidebar-bottom">
-                Simple • Fast • High Capacity • Offline
-            </div>
-
-        </aside>
-
-
-        <!-- =================================
-             WELCOME
-        ================================= -->
-
-        <section
-            class="welcome"
-            id="welcome"
+        <button
+            id="homeMenu"
+            class="active"
+            onclick="showHome()"
         >
+            🏠 &nbsp; Home
+        </button>
 
-            <div class="welcome-small">
-                Welcome to
+        <button
+            id="generatorMenu"
+            onclick="openGenerator()"
+        >
+            ▣ &nbsp; QR Generator
+        </button>
+
+        <button
+            id="settingsMenu"
+            onclick="showSettings()"
+        >
+            ⚙ &nbsp; Settings
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<main class="content">
+
+
+<!-- =========================
+     WELCOME
+========================= -->
+
+<section id="welcome" class="welcome">
+
+    <div class="welcome-content">
+
+        <div class="welcome-small">
+            PREMIUM OFFLINE QR
+        </div>
+
+        <h1>
+            Create QR Codes
+        </h1>
+
+        <p>
+            Generate high-capacity QR codes directly on your device.
+            No API. No account. No external service.
+            Your data stays local.
+        </p>
+
+        <div class="create-wrap">
+
+            <button
+                class="create-button"
+                id="createButton"
+                onclick="fireAndOpen()"
+            >
+
+                <span>
+                    CREATE QR CODE
+                </span>
+
+                <i class="spark"></i>
+                <i class="spark"></i>
+                <i class="spark"></i>
+                <i class="spark"></i>
+                <i class="spark"></i>
+                <i class="spark"></i>
+                <i class="spark"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     QR GENERATOR
+========================= -->
+
+<section
+    id="generator"
+    class="generator"
+>
+
+    <div class="panel">
+
+        <div class="panel-head">
+
+            <div>
+                <h2>
+                    QR Generator
+                </h2>
+
+                <p>
+                    Create a QR code completely offline.
+                </p>
             </div>
 
-            <h1>
-                My QR
-            </h1>
+            <button
+                class="close-btn"
+                onclick="closeGenerator()"
+                title="Close"
+            >
+                ×
+            </button>
 
-            <p>
-                Create professional QR codes instantly.
-                Add your logo, choose error correction,
-                and download your QR code directly —
-                completely offline.
-            </p>
+        </div>
 
 
-            <div class="create-wrap">
+        <div class="generator-grid">
 
-                <button
-                    class="create-button"
-                    id="createButton"
-                    onclick="fireAndOpen()"
-                >
 
-                    <div class="button-content">
+            <!-- INPUT -->
 
-                        <span class="button-icon">
-                            ▦
-                        </span>
+            <div class="input-card">
 
-                        <span>
-                            Create QR Code
-                        </span>
+                <div class="field">
 
-                        <span class="button-arrow">
-                            →
-                        </span>
+                    <label>
+                        TEXT / URL
+                    </label>
 
+                    <textarea
+                        id="qrText"
+                        maxlength="5000"
+                        placeholder="Enter text, URL, contact information..."
+                    ></textarea>
+
+                    <div class="counter">
+                        <span id="counter">0</span> / 5000
                     </div>
 
-
-                    <div class="sparks">
-
-                        <span class="spark"></span>
-                        <span class="spark"></span>
-                        <span class="spark"></span>
-                        <span class="spark"></span>
-                        <span class="spark"></span>
-                        <span class="spark"></span>
-                        <span class="spark"></span>
-                        <span class="spark"></span>
-
-                    </div>
-
-                </button>
-
-                <div class="fire-message">
-                    🔊 Touch / Click — Firing Effect
                 </div>
 
-            </div>
 
-        </section>
+                <div class="field">
 
-
-        <!-- =================================
-             QR GENERATOR
-        ================================= -->
-
-        <section
-            class="generator"
-            id="generator"
-        >
-
-            <div class="generator-header">
-
-                <div class="generator-title">
-                    👑 QR Generator
-                </div>
-
-                <button
-                    class="close-btn"
-                    onclick="closeGenerator()"
-                >
-                    ×
-                </button>
-
-            </div>
-
-
-            <label class="label">
-                Enter Text or URL
-            </label>
-
-            <div class="textarea-wrap">
-
-                <textarea
-                    id="qrText"
-                    maxlength="5000"
-                    placeholder="Enter text, URL or other information..."
-                ></textarea>
-
-                <div class="counter">
-                    <span id="counter">0</span>/5000
-                </div>
-
-            </div>
-
-
-            <div class="options">
-
-                <div class="option">
-
-                    <label class="label">
-                        Error Correction
+                    <label>
+                        ERROR CORRECTION
                     </label>
 
                     <select id="errorLevel">
 
                         <option value="L">
-                            L — Low (7%)
+                            L — Low
                         </option>
 
                         <option value="M">
-                            M — Medium (15%)
+                            M — Medium
                         </option>
 
                         <option value="Q">
-                            Q — Quartile (25%)
+                            Q — Quartile
                         </option>
 
                         <option value="H" selected>
-                            H — High (30%)
+                            H — High
                         </option>
 
                     </select>
@@ -1624,330 +1161,210 @@ input[type="range"]{
                 </div>
 
 
-                <div class="option">
+                <div class="field">
 
-                    <label class="label">
-                        QR Capacity
+                    <label>
+                        QR CAPACITY
                     </label>
 
-                    <select disabled>
+                    <select class="capacity" disabled>
 
                         <option>
-                            Automatic (1–40)
+                            Automatic — Version 1–40
                         </option>
 
                     </select>
 
                 </div>
 
-            </div>
 
+                <div class="field">
 
-            <!-- LOGO -->
-
-            <div class="logo-box">
-
-                <label class="label">
-                    Add Logo to QR
-                </label>
-
-                <div class="logo-row">
-
-                    <div style="color:#999;font-size:11px;">
-                        PNG, JPG, WEBP
-                    </div>
-
-                    <label
-                        class="upload"
-                        for="logoInput"
-                    >
-                        ⬆ Upload Logo
+                    <label>
+                        CENTER LOGO
                     </label>
 
-                    <input
-                        type="file"
-                        id="logoInput"
-                        accept="image/png,image/jpeg,image/webp"
+                    <div class="logo-row">
+
+                        <input
+                            type="file"
+                            id="logoInput"
+                            accept="image/png,image/jpeg,image/webp"
+                        >
+
+                        <button
+                            class="remove-logo"
+                            id="removeLogo"
+                            onclick="removeLogo()"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="logo-size-box"
+                        id="logoSizeBox"
                     >
+
+                        <label>
+                            LOGO SIZE
+                        </label>
+
+                        <div class="range-row">
+
+                            <input
+                                type="range"
+                                id="logoSize"
+                                min="12"
+                                max="28"
+                                value="20"
+                            >
+
+                            <div class="logo-value">
+                                <span id="logoSizeValue">
+                                    20
+                                </span>%
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
 
                 <button
-                    class="remove"
-                    id="removeLogo"
-                    onclick="removeLogo()"
+                    class="action-btn"
+                    onclick="generateQR()"
                 >
-                    🗑 Remove Logo
+                    GENERATE QR CODE
+                </button>
+
+
+                <button
+                    class="action-btn download-btn"
+                    id="downloadBtn"
+                    onclick="downloadQR()"
+                >
+                    DOWNLOAD PNG
                 </button>
 
 
                 <div
-                    class="logo-size"
-                    id="logoSizeBox"
-                >
-
-                    <div class="size-head">
-
-                        <span>
-                            Logo Size
-                        </span>
-
-                        <span>
-                            <span id="logoSizeValue">20</span>%
-                        </span>
-
-                    </div>
-
-                    <input
-                        type="range"
-                        id="logoSize"
-                        min="12"
-                        max="28"
-                        value="20"
-                    >
-
-                </div>
+                    class="error"
+                    id="error"
+                ></div>
 
             </div>
-
-
-            <!-- ACTIONS -->
-
-            <div class="actions">
-
-                <button
-                    class="generate"
-                    onclick="generateQR()"
-                >
-                    ▦ Generate QR
-                </button>
-
-                <button
-                    class="download"
-                    id="downloadBtn"
-                    onclick="downloadQR()"
-                >
-                    ⇩ Download PNG
-                </button>
-
-            </div>
-
-
-            <div
-                class="error"
-                id="error"
-            ></div>
 
 
             <!-- PREVIEW -->
 
-            <div class="preview">
+            <div class="preview-card">
 
                 <div class="preview-title">
                     QR PREVIEW
                 </div>
 
-                <div id="qrcode">
+                <div class="qr-area">
 
-                    <div class="empty">
-
-                        <div style="font-size:45px;margin-bottom:10px;">
-                            ▦
-                        </div>
-
-                        Enter content and click Generate
-
-                    </div>
+                    <div id="qrcode"></div>
 
                 </div>
 
             </div>
 
-        </section>
+        </div>
 
     </div>
 
+</section>
+
 </main>
 
+</div>
 
-<!-- =================================
-     QR LIBRARY
-================================= -->
+<div class="footer">
+    QR Luxury • Offline QR Generator • No external API
+</div>
+
+</div>
+
+
+<!-- FLASH -->
+
+<div
+    class="flash"
+    id="flash"
+></div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
 
 <script src="qrcode.js"></script>
 
-
 <script>
-
-/* =================================
-   VARIABLES
-================================= */
 
 let currentQR = null;
 let uploadedLogo = null;
 
 
-/* =================================
-   FIRE SOUND
-   100% OFFLINE
-================================= */
-
-let audioContext = null;
+/* =========================
+   ACHIEVEMENT SOUND
+========================= */
 
 function firingSound(){
 
-    try{
+    const sound =
+        document.getElementById("clickSound");
 
-        if(!audioContext){
+    if(!sound) return;
 
-            audioContext =
-                new (
-                    window.AudioContext ||
-                    window.webkitAudioContext
-                )();
+    sound.pause();
+    sound.currentTime = 0;
+    sound.volume = 1.0;
 
-        }
+    const playPromise =
+        sound.play();
 
-        if(audioContext.state === "suspended"){
-            audioContext.resume();
-        }
+    if(playPromise !== undefined){
 
+        playPromise.catch(function(error){
 
-        const now =
-            audioContext.currentTime;
+            console.log(
+                "Sound could not play:",
+                error
+            );
 
-
-        /* Main shot */
-
-        const osc =
-            audioContext.createOscillator();
-
-        const gain =
-            audioContext.createGain();
-
-
-        osc.type = "sawtooth";
-
-        osc.frequency.setValueAtTime(
-            180,
-            now
-        );
-
-        osc.frequency.exponentialRampToValueAtTime(
-            45,
-            now + .22
-        );
-
-
-        gain.gain.setValueAtTime(
-            .0001,
-            now
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .65,
-            now + .008
-        );
-
-        gain.gain.exponentialRampToValueAtTime(
-            .0001,
-            now + .25
-        );
-
-
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
-
-
-        osc.start(now);
-        osc.stop(now + .26);
-
-
-        /* Crack sound */
-
-        const crack =
-            audioContext.createOscillator();
-
-        const crackGain =
-            audioContext.createGain();
-
-
-        crack.type = "square";
-
-        crack.frequency.setValueAtTime(
-            850,
-            now
-        );
-
-        crack.frequency.exponentialRampToValueAtTime(
-            120,
-            now + .12
-        );
-
-
-        crackGain.gain.setValueAtTime(
-            .0001,
-            now
-        );
-
-        crackGain.gain.exponentialRampToValueAtTime(
-            .25,
-            now + .005
-        );
-
-        crackGain.gain.exponentialRampToValueAtTime(
-            .0001,
-            now + .13
-        );
-
-
-        crack.connect(crackGain);
-
-        crackGain.connect(
-            audioContext.destination
-        );
-
-
-        crack.start(now);
-        crack.stop(now + .14);
-
-
-    }catch(e){
-
-        console.log(
-            "Audio unavailable",
-            e
-        );
+        });
 
     }
-
 }
 
 
-/* =================================
-   FIRE + OPEN
-================================= */
+/* =========================
+   CREATE BUTTON ANIMATION
+========================= */
 
 function fireAndOpen(){
 
     const button =
-        document.getElementById(
-            "createButton"
-        );
+        document.getElementById("createButton");
 
     const flash =
-        document.getElementById(
-            "flash"
-        );
+        document.getElementById("flash");
 
 
-    /* Sound */
+    /* PLAY UPLOADED SOUND */
 
     firingSound();
 
 
-    /* Button */
+    /* BUTTON FIRE */
 
     button.classList.remove("fire");
 
@@ -1956,96 +1373,82 @@ function fireAndOpen(){
     button.classList.add("fire");
 
 
-    /* Flash */
-
-    flash.classList.remove("active");
-
-    void flash.offsetWidth;
+    /* SCREEN FLASH */
 
     flash.classList.add("active");
 
 
-    /* Open generator */
+    setTimeout(function(){
 
-    setTimeout(
-        function(){
+        flash.classList.remove("active");
 
-            openGenerator();
+    },180);
 
-        },
-        430
-    );
+
+    /* OPEN DASHBOARD */
+
+    setTimeout(function(){
+
+        openGenerator();
+
+    },430);
 
 }
 
 
-/* =================================
+/* =========================
    OPEN GENERATOR
-================================= */
+========================= */
 
 function openGenerator(){
 
-    document
-    .getElementById("welcome")
-    .style.display = "none";
+    document.getElementById("welcome")
+        .style.display = "none";
+
+    document.getElementById("generator")
+        .classList.add("show");
 
 
-    const generator =
-        document.getElementById(
-            "generator"
-        );
+    document.getElementById("homeMenu")
+        .classList.remove("active");
 
+    document.getElementById("generatorMenu")
+        .classList.add("active");
 
-    generator.classList.add("show");
-
-
-    document
-    .querySelectorAll(".menu-btn")
-    .forEach(btn =>
-        btn.classList.remove("active")
-    );
-
-
-    document
-    .querySelectorAll(".menu-btn")[1]
-    .classList.add("active");
+    document.getElementById("settingsMenu")
+        .classList.remove("active");
 
 }
 
 
-/* =================================
+/* =========================
    CLOSE GENERATOR
-================================= */
+========================= */
 
 function closeGenerator(){
 
-    document
-    .getElementById("generator")
-    .classList.remove("show");
+    document.getElementById("generator")
+        .classList.remove("show");
+
+    document.getElementById("welcome")
+        .style.display = "flex";
 
 
-    document
-    .getElementById("welcome")
-    .style.display = "flex";
+    document.getElementById("homeMenu")
+        .classList.add("active");
 
+    document.getElementById("generatorMenu")
+        .classList.remove("active");
 
-    document
-    .querySelectorAll(".menu-btn")
-    .forEach(btn =>
-        btn.classList.remove("active")
-    );
-
-
-    document
-    .querySelectorAll(".menu-btn")[0]
-    .classList.add("active");
+    document.getElementById("settingsMenu")
+        .classList.remove("active");
 
 }
 
 
-/* =================================
+/* =========================
    HOME
-================================= */
+========================= */
 
 function showHome(){
 
@@ -2054,27 +1457,35 @@ function showHome(){
 }
 
 
-/* =================================
+/* =========================
    SETTINGS
-================================= */
+========================= */
 
 function showSettings(){
 
-    firingSound();
+    document.getElementById("homeMenu")
+        .classList.remove("active");
+
+    document.getElementById("generatorMenu")
+        .classList.remove("active");
+
+    document.getElementById("settingsMenu")
+        .classList.add("active");
+
 
     alert(
         "QR Luxury Settings\n\n" +
-        "Offline Mode: ON\n" +
-        "QR Capacity: Version 1–40\n" +
-        "Error Correction: L / M / Q / H"
+        "QR generation is fully offline.\n" +
+        "Automatic QR Version: 1–40\n" +
+        "Maximum input: 5000 characters."
     );
 
 }
 
 
-/* =================================
+/* =========================
    COUNTER
-================================= */
+========================= */
 
 document
 .getElementById("qrText")
@@ -2082,18 +1493,16 @@ document
     "input",
     function(){
 
-        document
-        .getElementById("counter")
-        .textContent =
-            this.value.length;
+        document.getElementById("counter")
+            .textContent = this.value.length;
 
     }
 );
 
 
-/* =================================
+/* =========================
    LOGO UPLOAD
-================================= */
+========================= */
 
 document
 .getElementById("logoInput")
@@ -2116,6 +1525,7 @@ document
             this.value = "";
 
             return;
+
         }
 
 
@@ -2133,8 +1543,7 @@ document
                 img.onload =
                     function(){
 
-                        uploadedLogo =
-                            img;
+                        uploadedLogo = img;
 
 
                         document
@@ -2167,30 +1576,28 @@ document
 );
 
 
-/* =================================
+/* =========================
    REMOVE LOGO
-================================= */
+========================= */
 
 function removeLogo(){
 
     uploadedLogo = null;
 
 
-    document
-    .getElementById("logoInput")
-    .value = "";
+    document.getElementById(
+        "logoInput"
+    ).value = "";
 
 
-    document
-    .getElementById("removeLogo")
-    .style.display =
-        "none";
+    document.getElementById(
+        "removeLogo"
+    ).style.display = "none";
 
 
-    document
-    .getElementById("logoSizeBox")
-    .style.display =
-        "none";
+    document.getElementById(
+        "logoSizeBox"
+    ).style.display = "none";
 
 
     if(
@@ -2207,9 +1614,9 @@ function removeLogo(){
 }
 
 
-/* =================================
+/* =========================
    LOGO SIZE
-================================= */
+========================= */
 
 document
 .getElementById("logoSize")
@@ -2217,11 +1624,9 @@ document
     "input",
     function(){
 
-        document
-        .getElementById(
+        document.getElementById(
             "logoSizeValue"
-        )
-        .textContent =
+        ).textContent =
             this.value;
 
 
@@ -2241,9 +1646,9 @@ document
 );
 
 
-/* =================================
+/* =========================
    GENERATE QR
-================================= */
+========================= */
 
 function generateQR(){
 
@@ -2293,6 +1698,7 @@ function generateQR(){
             "block";
 
         return;
+
     }
 
 
@@ -2345,7 +1751,8 @@ function generateQR(){
             "block";
 
 
-    }catch(e){
+    }
+    catch(e){
 
         console.error(e);
 
@@ -2362,9 +1769,9 @@ function generateQR(){
 }
 
 
-/* =================================
+/* =========================
    ADD LOGO
-================================= */
+========================= */
 
 function addLogoToQR(
     qrImage,
@@ -2400,6 +1807,7 @@ function addLogoToQR(
 
         canvas.width =
             width;
+
 
         canvas.height =
             height;
@@ -2484,11 +1892,17 @@ function addLogoToQR(
 
 
         const x =
-            (width - logoWidth) / 2;
+            (
+                width -
+                logoWidth
+            ) / 2;
 
 
         const y =
-            (height - logoHeight) / 2;
+            (
+                height -
+                logoHeight
+            ) / 2;
 
 
         const padding =
@@ -2571,7 +1985,8 @@ function addLogoToQR(
 
         draw();
 
-    }else{
+    }
+    else{
 
         qrImage.onload =
             draw;
@@ -2581,9 +1996,9 @@ function addLogoToQR(
 }
 
 
-/* =================================
-   ROUND RECT
-================================= */
+/* =========================
+   ROUNDED RECTANGLE
+========================= */
 
 function roundRect(
     ctx,
@@ -2664,9 +2079,9 @@ function roundRect(
 }
 
 
-/* =================================
-   DOWNLOAD
-================================= */
+/* =========================
+   DOWNLOAD QR
+========================= */
 
 function downloadQR(){
 
@@ -2711,8 +2126,8 @@ function downloadQR(){
 
     link.download =
         uploadedLogo
-        ? "qr-luxury-with-logo.png"
-        : "qr-luxury.png";
+        ? "qr-code-with-logo.png"
+        : "qr-code.png";
 
 
     link.href =
@@ -2736,9 +2151,9 @@ function downloadQR(){
 }
 
 
-/* =================================
+/* =========================
    CTRL + ENTER
-================================= */
+========================= */
 
 document
 .getElementById("qrText")
