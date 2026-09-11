@@ -1319,31 +1319,17 @@ let uploadedLogo = null;
 
 function firingSound(){
 
-    const sound =
-        document.getElementById("clickSound");
+    const speech = new SpeechSynthesisUtterance("जय श्री राम");
 
-    if(!sound) return;
+    speech.lang = "hi-IN";
+    speech.rate = 0.9;
+    speech.pitch = 1.0;
+    speech.volume = 1.0;
 
-    sound.pause();
-    sound.currentTime = 0;
-    sound.volume = 1.0;
-
-    const playPromise =
-        sound.play();
-
-    if(playPromise !== undefined){
-
-        playPromise.catch(function(error){
-
-            console.log(
-                "Sound could not play:",
-                error
-            );
-
-        });
-
-    }
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);
 }
+
 
 
 /* =========================
@@ -1352,47 +1338,25 @@ function firingSound(){
 
 function fireAndOpen(){
 
-    const button =
-        document.getElementById("createButton");
+    const button = document.getElementById("createButton");
+    const flash = document.getElementById("flash");
 
-    const flash =
-        document.getElementById("flash");
-
-
-    /* PLAY UPLOADED SOUND */
-
+    // सिर्फ जय श्री राम
     firingSound();
 
-
-    /* BUTTON FIRE */
-
     button.classList.remove("fire");
-
     void button.offsetWidth;
-
     button.classList.add("fire");
-
-
-    /* SCREEN FLASH */
 
     flash.classList.add("active");
 
-
     setTimeout(function(){
-
         flash.classList.remove("active");
-
     },180);
 
-
-    /* OPEN DASHBOARD */
-
     setTimeout(function(){
-
         openGenerator();
-
     },430);
-
 }
 
 
